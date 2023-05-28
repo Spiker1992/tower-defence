@@ -34,7 +34,7 @@ This is what we have currently:
 What will I do next:
 - the game loop code needs to refactored further
 - boundary between towers and enemies needs to be tidied. 
-- i need to have a place for a central coordinated that will require input of a map, towers and enemies.
+- i need to have a place for a central coordination point that will require input of a map, towers and enemies. this center point will contain the game loop logic.
 - enemies will be defined on the map level
 
 
