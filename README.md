@@ -36,6 +36,7 @@ What will I do next:
 - boundary between towers and enemies needs to be tidied. 
 - i need to have a place for a central coordination point that will require input of a map, towers and enemies. this center point will contain the game loop logic.
 - enemies will be defined on the map level
+- boundary between layers (UI/Entities) needs to be made clearer, it feels coupled right now.
 
 
 
