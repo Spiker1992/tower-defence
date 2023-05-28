@@ -1,14 +1,17 @@
 import { Enemy } from "../entities/enemy";
+import { Enemies } from "../state/enemies";
 
 export class MoveEnemy {
   protected enemy: Enemy
   protected movement: NodeJS.Timer
-  protected speed: number = 1000
+  protected speed: number
   private enemyElement: HTMLDivElement
-  private enemySize: number = 20
+  private enemySize: number
 
   public constructor(enemy: Enemy) {
     this.enemy = enemy
+    this.speed = enemy.speed
+    this.enemySize = enemy.size
   }
 
   public create(): void {
@@ -25,6 +28,7 @@ export class MoveEnemy {
     enemy.style.left = `${y}px`  // `${y-2.5}` /* Calculate the left position based on the grid cell */;
     document.getElementById("grid").appendChild(enemy);
     this.enemyElement = enemy;
+    this.enemy.setDomElement(enemy)
   }
 
   public handle(): void {
@@ -85,6 +89,10 @@ export class MoveEnemy {
 
     const deleteElement = setInterval(() => {
       this.enemyElement.remove()
+
+      const enemies = Enemies.getInstance()
+      enemies.remove(this.enemy)
+
       clearInterval(deleteElement)
     }, this.speed)
 
