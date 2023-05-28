@@ -39,7 +39,7 @@ export class Level1 extends PathPlacement {
             id += 1
         }, 1000)
 
-        const test = setInterval(() => {
+        const towerShooting = setInterval(() => {
             const towers = [
                 { x: 76, y: 16, range: 60, damage: 1 },
                 { x: 232, y: 71, range: 60, damage: 1 },
@@ -60,14 +60,17 @@ export class Level1 extends PathPlacement {
 
 
 
+
+
         const stopSpawning = setInterval(() => {
             clearInterval(movement)
             clearInterval(stopSpawning)
         }, 1000 * this.numberOfEnemies)
 
         const gameEnded = setInterval(() => {
-            console.log("Game ended")
             clearInterval(gameEnded)
+            clearInterval(towerShooting)
+            console.log("Game ended")
         }, 1000 * this.numberOfEnemies + 10000)
     }
 }
