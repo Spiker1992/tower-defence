@@ -64,4 +64,46 @@ Have a mixture of maps and levels. Each map would have a predefined set of level
 
 For this we would use diagram from `Idea 1` and adjust the game loop logic to accomodate above requirement.
 
+##  Bucket of ideas
+
+- Variable ranges and damage for towers
+- Towers may slow enemies down
+- Tower can do damage of various type (i.e. lighting and fire)
+- Enemies can have resistance to various damage types
+
+## Refinement 1
+
+Ive add a grid generation component and improved definition of components within the level loop..
+
+The 3 key  functionalities within the level loop:
+- Spawning enemies
+- Ability to manage towers
+- Combat between towers and enemies 
+
+The 2 key elements:
+- Enemy
+- Tower
+
+
+<img width="1286" alt="image" src="https://github.com/Spiker1992/tower-defence/assets/68771766/be7c9e0d-2dfd-45f9-b76b-97f6bc695096">
+
+### Scenarios
+
+#### Tower related scenarios
+1. I can start a game with no towers
+2. I can start a game with some towers, from a previous level
+3. I can add towers to the grid
+4. I can delete towers from the grid
+9. We can have different types of towers
+5. Towers can fire at enemies within their range
+7. Towers have their own shooting speed
+8. Towers have their own damage
+
+#### Enemy related scenarios
+1. Enemies of different types can be spawned on the map
+2. Enemies follow pre-set path
+3. Enemies have health
+4. Enemies loose health each time they are shot by the tower
+
+
 
