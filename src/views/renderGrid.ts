@@ -36,7 +36,6 @@ export function renderGrid(grid: string[][]) {
     const gridEle = firstOrCreateGrid()
 
     gridEle.innerHTML = '';
-
     for (let row = 0; row < numRows; row++) {
         const newRow = document.createElement('tr');
         for (let col = 0; col < numCols; col++) {
@@ -44,7 +43,7 @@ export function renderGrid(grid: string[][]) {
             newCell.setAttribute("row", `${row}`)
             newCell.setAttribute("col", `${col}`)
             newCell.onclick = () => {
-                (new AddTower(new Tower(1, { col: row, row: col }))).handle();
+                (new AddTower(new Tower(1, { col: col, row: row }))).handle();
             }
             newCell.textContent = grid[row][col];
             newCell.className = "cell";

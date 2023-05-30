@@ -3,8 +3,8 @@ import { Coordinate } from "../interfaces";
 export class PlacementManager {
     protected data: Coordinate[] = []
 
-    public add(col: number, row: number): void {
-        this.data.push({ col: col, row: row })
+    public add(row: number, col: number): void {
+        this.data.push({ row: row, col: col })
     }
 
     public has(col: number, row: number): boolean {

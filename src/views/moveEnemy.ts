@@ -60,8 +60,8 @@ export class MoveEnemy {
     return { x: centerX, y: centerY };
   }
 
-  protected animateEnemy(enemy: HTMLDivElement, x: number, y: number): void {
-    const targetCell = document.querySelector(`#gameTable .cell[row="${x}"][col="${y}"]`);
+  protected animateEnemy(enemy: HTMLDivElement, col: number, row: number): void {
+    const targetCell = document.querySelector(`#gameTable .cell[row="${row}"][col="${col}"]`);
 
     if (targetCell) {
       const { x, y } = this.getCenterPoint(targetCell)

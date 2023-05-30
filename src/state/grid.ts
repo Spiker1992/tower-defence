@@ -28,7 +28,7 @@ export class Grid {
 
     protected placeMarkers(grid: string[][], coords: Coordinate[], marker: string): void {
         coords.forEach(function (coord) {
-            grid[coord.col][coord.row] = marker
+            grid[coord.row][coord.col] = marker
         });
     }
 

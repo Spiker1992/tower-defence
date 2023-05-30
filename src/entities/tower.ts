@@ -6,6 +6,7 @@ export interface ITowerAttributes {
     y: number;
     range: number;
     damage: number;
+    firingSpeed: number;
 }
 
 export interface ITower {
@@ -20,6 +21,7 @@ export class Tower implements ITower {
     protected coords: Coordinate;
     protected range: number = 60;
     protected damage: number = 1;
+    protected firingSpeed: number = 1000;
 
     // view related settings
     protected towerSize: number = 20
@@ -40,14 +42,14 @@ export class Tower implements ITower {
 
     public render(): void {
         const targetCell = document.querySelector(`#gameTable .cell[row="${this.coords.row}"][col="${this.coords.col}"]`);
-        const { y, x } = getCenterPoint(targetCell)
+        const { x, y } = getCenterPoint(targetCell)
 
         const tower = document.createElement("div");
         const correction = this.towerSize / 2
         tower.className = "tower";
         tower.id = `tower${this.id}`
-        tower.style.top = `${x-correction}px` 
-        tower.style.left = `${y-correction}px` 
+        tower.style.top = `${y-correction}px` 
+        tower.style.left = `${x-correction}px` 
         tower.style.outlineOffset = `${this.range-correction}px`;
         
         document.getElementById("grid").appendChild(tower);
@@ -60,6 +62,7 @@ export class Tower implements ITower {
             y: parseInt(this.element.style.top),
             range: this.range,
             damage: this.damage,
+            firingSpeed: this.firingSpeed,
         }
     }
 }
