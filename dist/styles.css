@@ -2,10 +2,10 @@ body {
   margin: 0
 }
 
-#grid {
+#gameTable {
   position: relative;
-  width: 266px;
-  height: 266px;
+  width: 270px;
+  height: 270px;
   overflow: hidden;
 }
 
@@ -35,7 +35,6 @@ td {
   background: blue;
   border-radius: 25px;
   outline: red;
-  outline-offset: 50px;
   outline-width: 1px;
   outline-style: dotted;
 }

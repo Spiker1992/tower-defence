@@ -122,3 +122,14 @@ The 2 key elements:
 
 #### Overview
 <img width="471" alt="image" src="https://github.com/Spiker1992/tower-defence/assets/68771766/f62296ce-71ea-443a-9669-eae781413766">
+
+
+### Implementation notes
+
+#### iteration 1: added ability to add towers
+- After implementing towers I was able to quickly add on click event with adding towers, which worked right away, out of the box.
+- [TODO] I am not confident about tower range, needs to be confirmed later
+- [TODO] Tempted to extract anything dom related into it's own file
+- Use of service class for adding a tower worked great.
+- [TODO] There is a confusion about how cols and rows should work, order differs, this needs to be addressed. Issue currently present within `level1.ts` only.
+- [TODO] Would be nice to unit test error messages in exceptions

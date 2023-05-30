@@ -1,6 +1,7 @@
 import { Enemy } from "../../entities/enemy";
 import { getEnemyInRange } from "../../helpers/battle";
 import { Enemies } from "../../state/enemies";
+import { Towers } from "../../state/towers";
 import { MoveEnemy } from "../../views/moveEnemy";
 import { PathPlacement } from "../pathPlacement";
 
@@ -40,16 +41,15 @@ export class Level1 extends PathPlacement {
         }, 1000)
 
         const towerShooting = setInterval(() => {
-            const towers = [
-                { x: 76, y: 16, range: 60, damage: 1 },
-                { x: 232, y: 71, range: 60, damage: 1 },
-            ]
+            const store = Towers.getInstance()
+            const towers = store.all()
 
             towers.forEach(tower => {
-                const result = getEnemyInRange(tower)
+                const attributes = tower.attributes()
+                const result = getEnemyInRange(attributes)
                 
                 if (result != null) {
-                    result.reduceLife(tower.damage)
+                    result.reduceLife(attributes.damage)
 
                     if (result.isDead()) {
                         enemies.remove(result)

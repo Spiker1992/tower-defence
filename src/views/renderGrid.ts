@@ -1,3 +1,6 @@
+import { Tower } from "../entities/tower";
+import { AddTower } from "../services/addTower";
+
 export function firstOrCreateGameTable(): HTMLElement {
     let gameTable: HTMLElement = document.getElementById("#gameTable")
 
@@ -40,6 +43,9 @@ export function renderGrid(grid: string[][]) {
             const newCell = document.createElement('td');
             newCell.setAttribute("row", `${row}`)
             newCell.setAttribute("col", `${col}`)
+            newCell.onclick = () => {
+                (new AddTower(new Tower(1, { col: row, row: col }))).handle();
+            }
             newCell.textContent = grid[row][col];
             newCell.className = "cell";
             newRow.appendChild(newCell);

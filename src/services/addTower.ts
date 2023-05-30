@@ -39,7 +39,7 @@ export class AddTower {
         const coords = this.tower.getCoords()
         
         if (towers.has(coords.col, coords.row)) {
-            throw new InvalidLocationError("Location is taken by a path")
+            throw new InvalidLocationError("Location is taken by a tower")
         }
     }
 }

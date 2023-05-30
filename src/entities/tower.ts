@@ -1,19 +1,29 @@
 import { getCenterPoint } from "../helpers/grid";
 import { Coordinate } from "../interfaces";
 
+export interface ITowerAttributes {
+    x: number;
+    y: number;
+    range: number;
+    damage: number;
+}
+
 export interface ITower {
     getId(): number;
     getCoords(): Coordinate;
     render(): void;
+    attributes(): ITowerAttributes
 }
 
 export class Tower implements ITower {
     protected id: number;
     protected coords: Coordinate;
+    protected range: number = 60;
+    protected damage: number = 1;
 
     // view related settings
     protected towerSize: number = 20
-    protected element: Element
+    protected element: HTMLDivElement
 
     constructor(id: number, coords: Coordinate) {
         this.id = id
@@ -33,12 +43,23 @@ export class Tower implements ITower {
         const { y, x } = getCenterPoint(targetCell)
 
         const tower = document.createElement("div");
+        const correction = this.towerSize / 2
         tower.className = "tower";
         tower.id = `tower${this.id}`
-        tower.style.top = `${x-10}px` 
-        tower.style.left = `${y-10}px` 
+        tower.style.top = `${x-correction}px` 
+        tower.style.left = `${y-correction}px` 
+        tower.style.outlineOffset = `${this.range-correction}px`;
         
         document.getElementById("grid").appendChild(tower);
         this.element = tower;
+    }
+
+    public attributes(): ITowerAttributes {
+        return {
+            x: parseInt(this.element.style.left),
+            y: parseInt(this.element.style.top),
+            range: this.range,
+            damage: this.damage,
+        }
     }
 }
