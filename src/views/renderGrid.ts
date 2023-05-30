@@ -1,8 +1,38 @@
-export function renderGrid(grid: string[][] ) {
+export function firstOrCreateGameTable(): HTMLElement {
+    let gameTable: HTMLElement = document.getElementById("#gameTable")
+
+    if (!gameTable) {
+        gameTable = document.createElement("div");
+        gameTable.id = "gameTable"
+
+        const bodyEle = document.getElementsByTagName("body")[0]
+        bodyEle.appendChild(gameTable)
+    }
+
+    return gameTable
+}
+
+export function firstOrCreateGrid(): HTMLElement {
+    const gameTable = firstOrCreateGameTable()
+
+    let gridEle = document.getElementById("#grid")
+
+    if (!gridEle) {
+        gridEle = document.createElement("div")
+        gridEle.id = "grid"
+
+        gameTable.appendChild(gridEle)
+    }
+
+    return gridEle
+}
+
+export function renderGrid(grid: string[][]) {
     const numRows = 5
     const numCols = 5
-    const gameTable = document.getElementById('gameTable');
-    gameTable.innerHTML = '';
+    const gridEle = firstOrCreateGrid()
+
+    gridEle.innerHTML = '';
 
     for (let row = 0; row < numRows; row++) {
         const newRow = document.createElement('tr');
@@ -14,6 +44,6 @@ export function renderGrid(grid: string[][] ) {
             newCell.className = "cell";
             newRow.appendChild(newCell);
         }
-        gameTable.appendChild(newRow);
+        gridEle.appendChild(newRow);
     }
 }
