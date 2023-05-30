@@ -106,4 +106,19 @@ The 2 key elements:
 4. Enemies loose health each time they are shot by the tower
 
 
+### Diagrams for Flows
 
+#### Spawn Enemies
+<img width="765" alt="image" src="https://github.com/Spiker1992/tower-defence/assets/68771766/452b081e-7471-41e6-b71e-97a9fc7dea41">
+
+#### Add Towers
+<img width="765" alt="image" src="https://github.com/Spiker1992/tower-defence/assets/68771766/2a7ab546-5a9f-44a8-847b-a48b5fe2006c">
+
+#### Combat
+
+*NOTE* I am thinking to let Enemy Placement to hande logic for health deduction and enemy removal (total removal from dom and the store). This way Enemy model wouldn't contain business logic. If anything, we can later take this business logic into a service class, should there be a need for it.
+
+<img width="1014" alt="image" src="https://github.com/Spiker1992/tower-defence/assets/68771766/7d48fc03-0f96-48d9-ad3b-c394b3c02249">
+
+#### Overview
+<img width="471" alt="image" src="https://github.com/Spiker1992/tower-defence/assets/68771766/f62296ce-71ea-443a-9669-eae781413766">
