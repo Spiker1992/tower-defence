@@ -134,4 +134,3 @@ After adding new ability I was able to quickly add `onclick` event to trigger ne
 - [TODO] I am not confident about tower range, needs to be confirmed later
 - [TODO] Tempted to extract anything dom related into it's own file
 - [TODO] There is a confusion about how cols and rows should work, order differs, this needs to be addressed. Issue currently present within `level1.ts` only.
-- [TODO] Would be nice to unit test error messages in exceptions

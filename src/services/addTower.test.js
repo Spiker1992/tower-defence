@@ -47,6 +47,7 @@ describe('add tower service', () => {
         const action = new AddTower(tower)
 
         expect(() => action.handle()).toThrow(InvalidLocationError)
+        expect(() => action.handle()).toThrow("Location is taken by a path")
     })
 
     test('add tower to already occupide spot', () => {
@@ -55,6 +56,7 @@ describe('add tower service', () => {
         action.handle()
 
         expect(() => action.handle()).toThrow(InvalidLocationError)
+        expect(() => action.handle()).toThrow("Location is taken by a tower")
     })
 
     beforeEach(() => {
