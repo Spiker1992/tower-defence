@@ -127,9 +127,11 @@ The 2 key elements:
 ### Implementation notes
 
 #### iteration 1: added ability to add towers
-- After implementing towers I was able to quickly add on click event with adding towers, which worked right away, out of the box.
+After adding new ability I was able to quickly add `onclick` event to trigger new ability, which worked right away, out of the box. Use of service class for adding a tower worked great too, because it wrapper and coordinated work very effectively.
+
+<img width="277" alt="image" src="https://github.com/Spiker1992/tower-defence/assets/68771766/1c7c6089-04b4-47ed-83f9-330b76246ad2">
+
 - [TODO] I am not confident about tower range, needs to be confirmed later
 - [TODO] Tempted to extract anything dom related into it's own file
-- Use of service class for adding a tower worked great.
 - [TODO] There is a confusion about how cols and rows should work, order differs, this needs to be addressed. Issue currently present within `level1.ts` only.
 - [TODO] Would be nice to unit test error messages in exceptions
