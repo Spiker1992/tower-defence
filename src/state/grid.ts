@@ -18,6 +18,10 @@ export class Grid {
         return Grid.instance;
     }
 
+    public static deleteInstance(): void {
+        Grid.instance = null
+    }
+
     public generateGrid(numCols: number, numRows: number): void {
         this.baseGrid = generateGrid(numCols, numRows)
     }
@@ -36,7 +40,7 @@ export class Grid {
         const temp = [...this.baseGrid]
 
         this.placeMarkers(temp, this.path.all(), this.path.MARKER)
-        this.placeMarkers(temp, this.towers.all(), this.towers.MARKER)
+        // this.placeMarkers(temp, this.towers.all(), this.towers.MARKER)
         // this.placeMarkers(temp, this.enemies.all(), this.enemies.MARKER)
 
         return temp

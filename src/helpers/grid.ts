@@ -13,7 +13,7 @@ export function generateGrid(numCols: number, numRows: number): [][] {
 
 export function getCenterPoint(element: Element) {
     const { top, left, width, height } = element.getBoundingClientRect();
-    const centerX = left + ((width-20) / 2);
-    const centerY = top + ((height-20) / 2);
+    const centerX = left + ((width) / 2);
+    const centerY = top + ((height) / 2);
     return { x: centerX, y: centerY };
   }
