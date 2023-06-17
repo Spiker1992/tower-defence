@@ -71,7 +71,8 @@ export class MoveEnemy {
 
   protected transformElement(enemy: HTMLDivElement, x: number, y: number): void {
     const correctionLeft = (parseInt(enemy.style.left)) 
-    enemy.style.transition = `transform 1s linear`;
+    const speed  = this.speed / 1000
+    enemy.style.transition = `transform ${speed}s linear`;
     enemy.style.transform = `translate(${x-correctionLeft}px, ${y+this.enemySize}px)`;
   }
 

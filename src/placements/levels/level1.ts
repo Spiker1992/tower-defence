@@ -1,3 +1,5 @@
+import { BeastEnemy } from "../../entities/enemies/beastEnemy";
+import { TinyEnemy } from "../../entities/enemies/tinyEnemy";
 import { Enemy } from "../../entities/enemy";
 import { getEnemyInRange } from "../../helpers/battle";
 import { Enemies } from "../../state/enemies";
@@ -26,19 +28,41 @@ export class Level1 extends PathPlacement {
     }
 
     public start(): void {
-        const enemies = Enemies.getInstance()
         // Create an enemy with the defined path
-        let id: number = 1
-        const movement = setInterval(() => {
-            console.log("Game started")
-            const enemyPath = [...this.all()];
-            const enemy = new Enemy(enemyPath, id);
-            enemies.add(enemy)
 
-            const movement = new MoveEnemy(enemy)
-            movement.handle()
-            id += 1
-        }, 1000)
+
+        const enemies = Enemies.getInstance()
+
+        let id: number = 1;
+        const enemySpec: [typeof Enemy, number][] = [
+            [BeastEnemy, 2],
+            [TinyEnemy, 2],
+        ];
+
+        let index = 0;
+        let count = 0;
+        const movement = setInterval(() => {
+            console.log("Game started");
+            const enemyPath = [...this.all()];
+
+            if (count < enemySpec[index][1]) {
+                const EnemyType = enemySpec[index][0];
+                const enemy = new EnemyType(enemyPath, id);
+                enemies.add(enemy);
+                const moveEnemy = new MoveEnemy(enemy);
+                moveEnemy.handle();
+                id += 1;
+                count += 1;
+            } else {
+                count = 0;
+                index += 1;
+            }
+
+            if (index >= enemySpec.length) {
+                clearInterval(movement);
+                console.log("Game ended");
+            }
+        }, 1000);
 
         const towerShooting = setInterval(() => {
             const store = Towers.getInstance()
@@ -47,7 +71,7 @@ export class Level1 extends PathPlacement {
             towers.forEach(tower => {
                 const attributes = tower.attributes()
                 const result = getEnemyInRange(attributes)
-                
+
                 if (result != null) {
                     result.reduceLife(attributes.damage)
 
@@ -57,10 +81,6 @@ export class Level1 extends PathPlacement {
                 }
             })
         }, 1000)
-
-
-
-
 
         const stopSpawning = setInterval(() => {
             clearInterval(movement)

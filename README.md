@@ -133,3 +133,8 @@ After adding new ability I was able to quickly add `onclick` event to trigger ne
 
 - [TODO] I am not confident about tower range, needs to be confirmed later
 - [TODO] Tempted to extract anything dom related into it's own file
+
+#### iteration 2: spawn and  move enemies
+
+- added a basic script to spawn multiple enemies on the map
+- update movement to take enenmy's speed into account    
