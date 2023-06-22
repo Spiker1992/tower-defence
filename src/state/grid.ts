@@ -39,7 +39,9 @@ export class Grid {
 
         const temp = [...this.baseGrid]
 
-        this.placeMarkers(temp, this.path.all(), this.path.MARKER)
+        if (this.path?.all()) {
+            this.placeMarkers(temp, this.path.all(), this.path.MARKER)
+        }
         // this.placeMarkers(temp, this.towers.all(), this.towers.MARKER)
         // this.placeMarkers(temp, this.enemies.all(), this.enemies.MARKER)
 
