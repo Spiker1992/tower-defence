@@ -138,3 +138,9 @@ After adding new ability I was able to quickly add `onclick` event to trigger ne
 
 - added a basic script to spawn multiple enemies on the map
 - update movement to take enenmy's speed into account    
+
+#### iteration 3: added tower shooting logic
+
+- refactored functionality for shooting and added a test for  this
+- TODO: we can refactor this part further and extract distance related functionality out into their own classes
+- TODO: tower entity - we can try taking rendering function out into its own class

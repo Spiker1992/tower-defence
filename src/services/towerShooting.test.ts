@@ -37,7 +37,7 @@ describe("TowerShooting", () => {
     expect(stopShootingSpy).toHaveBeenCalled();
   });
 
-  it.only("should attack enemies within range", () => {
+  it("should attack enemies within range", () => {
     // Create mock instances of Enemies and Towers
     const enemiesInstance = Enemies.getInstance();
     const towersInstance = Towers.getInstance();
