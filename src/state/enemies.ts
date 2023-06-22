@@ -1,9 +1,4 @@
 import { Enemy } from "../entities/enemy";
-import { generateGrid } from "../helpers/grid";
-import { Coordinate } from "../interfaces";
-import { EnemyPlacement } from "../placements/enemyPlacement";
-import { PathPlacement } from "../placements/pathPlacement";
-import { TowerPlacement } from "../placements/towerPlacement";
 
 export class Enemies {
     protected data: Enemy[] = []
