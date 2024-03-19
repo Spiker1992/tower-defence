@@ -33,16 +33,15 @@ export class TowerShooting {
     private performTowerAttack(tower: ITower, enemies: Enemy[]): void {
         const attributes = tower.attributes();
         const targetEnemy = this.getEnemyInRange(attributes, enemies);
-        console.log("target enemy", targetEnemy)
         if (targetEnemy) {
-            console.log("damage", attributes.damage)
-          targetEnemy.reduceLife(attributes.damage);
-      
-          if (targetEnemy.isDead()) {
-            this.enemyStore.remove(targetEnemy);
-          }
+            tower.reload()
+            targetEnemy.reduceLife(attributes.damage);
+
+            if (targetEnemy.isDead()) {
+                this.enemyStore.remove(targetEnemy);
+            }
         }
-      }
+    }
 
     private getEnemyInRange(attributes: ITowerAttributes, enemies: Enemy[]): Enemy | null {
         let closestEnemy = null;
