@@ -13,7 +13,8 @@ export interface ITower {
     getId(): number;
     getCoords(): Coordinate;
     render(): void;
-    attributes(): ITowerAttributes
+    attributes(): ITowerAttributes;
+    reload(): void;
 }
 
 export class Tower implements ITower {
@@ -48,10 +49,10 @@ export class Tower implements ITower {
         const correction = this.towerSize / 2
         tower.className = "tower";
         tower.id = `tower${this.id}`
-        tower.style.top = `${y-correction}px` 
-        tower.style.left = `${x-correction}px` 
-        tower.style.outlineOffset = `${this.range-correction}px`;
-        
+        tower.style.top = `${y - correction}px`
+        tower.style.left = `${x - correction}px`
+        tower.style.outlineOffset = `${this.range - correction}px`;
+
         document.getElementById("grid").appendChild(tower);
         this.element = tower;
     }
@@ -64,5 +65,23 @@ export class Tower implements ITower {
             damage: this.damage,
             firingSpeed: this.firingSpeed,
         }
+    }
+
+    public reload(): void {
+        const towerReloading = new CustomEvent("towerReloading", {
+            detail: {
+                tower: this,
+            }
+        })
+        window.dispatchEvent(towerReloading)
+
+        setTimeout(() => {
+            const towerReloaded = new CustomEvent("towerReloaded", {
+                detail: {
+                    tower: this,
+                }
+            })
+            window.dispatchEvent(towerReloaded)
+        }, this.firingSpeed);
     }
 }
