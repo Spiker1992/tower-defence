@@ -16,8 +16,6 @@ export class Enemies {
     }
 
     public remove(enemy: Enemy): void {
-        console.log(enemy)
-        console.log(this.data)
         this.data = this.data.filter((item) => {
             return item.id !== enemy.id
         })
