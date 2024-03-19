@@ -30,6 +30,13 @@ export class Enemy {
     public move(): void {
         this.prevPosition = this.currentPosition
         this.currentPosition = this.path.shift()
+
+        const enemyMoved = new CustomEvent("enemyMoved", {
+            detail: {
+              enemy: this,
+            },
+        });
+        window.dispatchEvent(enemyMoved);
     }
 
     public getPrevPosition(): { col: number; row: number } {
