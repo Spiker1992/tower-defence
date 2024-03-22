@@ -18,6 +18,14 @@ export class AddTower {
         store.add(this.tower)
 
         this.tower.render()
+
+        const towerAdded = new CustomEvent("towerAdded", {
+            detail: {
+                tower: this.tower,
+            }
+        })
+        window.dispatchEvent(towerAdded)
+
     }
 
     protected isFreeCoordinate(): void {

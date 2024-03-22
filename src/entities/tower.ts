@@ -27,6 +27,7 @@ export class Tower implements ITower {
     // view related settings
     protected towerSize: number = 20
     protected element: HTMLDivElement
+    canShoot: boolean = false
 
     constructor(id: number, coords: Coordinate) {
         this.id = id
@@ -39,6 +40,14 @@ export class Tower implements ITower {
 
     public getCoords(): Coordinate {
         return this.coords
+    }
+
+    public getRange(): number {
+        return this.range
+    }
+
+    public getSize(): number {
+        return this.towerSize
     }
 
     public render(): void {
@@ -68,6 +77,7 @@ export class Tower implements ITower {
     }
 
     public reload(): void {
+        this.canShoot = false
         const towerReloading = new CustomEvent("towerReloading", {
             detail: {
                 tower: this,
@@ -76,12 +86,17 @@ export class Tower implements ITower {
         window.dispatchEvent(towerReloading)
 
         setTimeout(() => {
-            const towerReloaded = new CustomEvent("towerReloaded", {
-                detail: {
-                    tower: this,
-                }
-            })
-            window.dispatchEvent(towerReloaded)
+            this.towerReady()
         }, this.firingSpeed);
+    }
+
+    public towerReady(): void {
+        this.canShoot = true
+        const towerReloaded = new CustomEvent("towerReloaded", {
+            detail: {
+                tower: this,
+            }
+        })
+        window.dispatchEvent(towerReloaded)
     }
 }

@@ -33,6 +33,10 @@ export class MoveEnemy {
 
   public handle(): void {
     this.movement = setInterval(() => {
+      if (!this.enemyElement) {
+        this.create()
+      }
+
       this.enemy.move();
 
       if (this.noMovesLeft()) {
@@ -45,10 +49,6 @@ export class MoveEnemy {
   }
 
   protected completeMove(): void {
-    if (!this.enemyElement) {
-      this.create()
-    }
-
     const enemyPosition = this.enemy.getPosition();
     this.animateEnemy(this.enemyElement, enemyPosition.col, enemyPosition.row)
   }

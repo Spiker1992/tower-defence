@@ -34,13 +34,25 @@ export class TowerShooting {
         const attributes = tower.attributes();
         const targetEnemy = this.getEnemyInRange(attributes, enemies);
         if (targetEnemy) {
-            tower.reload()
-            targetEnemy.reduceLife(attributes.damage);
-
-            if (targetEnemy.isDead()) {
-                this.enemyStore.remove(targetEnemy);
-            }
+            
         }
+    }
+
+    public static attackEnemy(tower: ITower, enemy: Enemy): void {
+        const attributes = tower.attributes();
+        tower.reload()
+        enemy.reduceLife(attributes.damage);
+
+        if (enemy.isDead()) {
+            Enemies.getInstance().remove(enemy);
+        }
+    }
+
+    public static enemyInRange(tower: ITower, enemy: Enemy): Boolean {
+        const attributes = tower.attributes();
+        const distance = TowerShooting.calculateDistance(attributes, enemy);
+        
+        return distance <= attributes.range
     }
 
     private getEnemyInRange(attributes: ITowerAttributes, enemies: Enemy[]): Enemy | null {
@@ -52,7 +64,7 @@ export class TowerShooting {
                 return
             }
 
-            const distance = this.calculateDistance(attributes, enemy);
+            const distance = TowerShooting.calculateDistance(attributes, enemy);
             if (distance <= attributes.range && distance < closestDistance) {
                 closestEnemy = enemy;
                 closestDistance = distance;
@@ -62,10 +74,9 @@ export class TowerShooting {
         return closestEnemy;
     }
 
-    private calculateDistance(attributes: ITowerAttributes, enemy: Enemy): number {
+    private static calculateDistance(attributes: ITowerAttributes, enemy: Enemy): number {
         const { x: towerCenterX, y: towerCenterY } = attributes;
         const { x, y } = getCenterPoint(enemy.element);
-
         const deltaX = x - towerCenterX;
         const deltaY = y - towerCenterY;
         return Math.sqrt(deltaX * deltaX + deltaY * deltaY);

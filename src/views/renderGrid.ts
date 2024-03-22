@@ -43,7 +43,7 @@ export function renderGrid(grid: string[][]) {
             newCell.setAttribute("row", `${row}`)
             newCell.setAttribute("col", `${col}`)
             newCell.onclick = () => {
-                (new AddTower(new Tower(1, { col: col, row: row }))).handle();
+                (new AddTower(new Tower(parseInt(`${col}${row}`) , { col: col, row: row }))).handle();
             }
             newCell.textContent = grid[row][col];
             newCell.className = "cell";

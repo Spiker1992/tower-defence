@@ -28,15 +28,27 @@ export class Enemy {
     }
 
     public move(): void {
+        const max = (this.speed / 500) 
+        let step = 1
+        
+        const notification = setInterval(() => {
+            if (step >= max) {
+                clearInterval(notification)
+            }
+
+            const enemyMoved = new CustomEvent("enemyMoved", {
+                detail: {
+                  enemy: this,
+                },
+            });
+            window.dispatchEvent(enemyMoved);
+
+
+            step += 1
+        }, 500)
+        
         this.prevPosition = this.currentPosition
         this.currentPosition = this.path.shift()
-
-        const enemyMoved = new CustomEvent("enemyMoved", {
-            detail: {
-              enemy: this,
-            },
-        });
-        window.dispatchEvent(enemyMoved);
     }
 
     public getPrevPosition(): { col: number; row: number } {
