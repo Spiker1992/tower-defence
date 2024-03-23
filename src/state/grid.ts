@@ -50,6 +50,12 @@ export class Grid {
 
     public setPath(paths: PathPlacement): void {
         this.path = paths
+
+        window.dispatchEvent(new CustomEvent("path-set", {
+            detail: {
+                paths: paths.all()
+            }
+        }))
     }
 
     public setTowers(towers: TowerPlacement): void {
