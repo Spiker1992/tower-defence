@@ -78,6 +78,7 @@ export class Tower implements ITower {
 
     public reload(): void {
         this.canShoot = false
+
         const towerReloading = new CustomEvent("towerReloading", {
             detail: {
                 tower: this,
@@ -86,12 +87,13 @@ export class Tower implements ITower {
         window.dispatchEvent(towerReloading)
 
         setTimeout(() => {
-            this.towerReady()
+            this.reloaded()
         }, this.firingSpeed);
     }
 
-    public towerReady(): void {
+    public reloaded(): void {
         this.canShoot = true
+        
         const towerReloaded = new CustomEvent("towerReloaded", {
             detail: {
                 tower: this,
