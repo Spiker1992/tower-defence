@@ -40,10 +40,6 @@ export class EnemySpawner {
         index += 1;
       }
 
-      if (id === 2) {
-        this.eventEmitter.emit("firstEnemySpawned");
-      }
-
       if (index >= this.enemySpec.length) {
         clearInterval(movement);
         console.log("Finished spawning enemies");

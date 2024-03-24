@@ -22,14 +22,7 @@ export abstract class PathPlacement extends PlacementManager {
 
     protected spawnEnemies() {
         const spawner = new EnemySpawner(this.enemySpec, this.spawnSpeed, this.all());
-        spawner.on("firstEnemySpawned", () => {
-            this.startShooting()
-        });
         
         spawner.startSpawning();
-    }
-
-    protected startShooting() {
-        new TowerShooting().startShooting()
     }
 }
