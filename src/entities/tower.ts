@@ -15,7 +15,6 @@ export interface ITower {
     getId(): number;
     getCoords(): Coordinate;
     render(): void;
-    attributes(): ITowerAttributes;
     reload(): void;
 }
 
@@ -29,7 +28,7 @@ export class Tower implements ITower {
     // view related settings
     protected towerSize: number = 20
     protected element: HTMLDivElement
-    canShoot: boolean = false
+    protected canShoot: boolean = false
 
     constructor(id: number, coords: Coordinate) {
         this.id = id
@@ -66,16 +65,6 @@ export class Tower implements ITower {
 
         document.getElementById("grid").appendChild(tower);
         this.element = tower;
-    }
-
-    public attributes(): ITowerAttributes {
-        return {
-            x: parseInt(this.element.style.left),
-            y: parseInt(this.element.style.top),
-            range: this.range,
-            damage: this.damage,
-            firingSpeed: this.firingSpeed,
-        }
     }
 
     public attack(enemy: Enemy): boolean {
