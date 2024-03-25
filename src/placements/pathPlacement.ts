@@ -1,7 +1,6 @@
 import { PATH_MARKER } from "../constants";
 import { Enemy } from "../entities/enemy";
-import { PlacementManager } from "./placementManager";
-import { TowerShooting } from "../services/towerShooting";
+import { PlacementManager } from "./placementManager"; 
 import { EnemySpawner } from "../services/EnemySpawner";
 
 export abstract class PathPlacement extends PlacementManager {

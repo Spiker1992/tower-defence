@@ -1,7 +1,6 @@
 import { Enemy } from "./entities/enemy";
 import { Tower } from "./entities/tower";
-import { Coordinate } from "./interfaces";
-import { TowerShooting } from "./services/towerShooting";
+import { Coordinate } from "./interfaces"; 
 import { Grid } from "./state/grid";
 import { enemyInRange } from "./utils";
 
@@ -80,7 +79,7 @@ function notifiyTowers(enemy: Enemy): void {
     if (!enemy.getPosition()) return
 
     const positionHash = getCoordsHash(enemy.getPosition())
-    const towersWithinRange = towerSpatialGrid[positionHash]
+    const towersWithinRange: Tower[] = towerSpatialGrid[positionHash]
 
     if (!!towersWithinRange === false) return
 
