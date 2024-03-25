@@ -65,5 +65,7 @@ export class Enemy {
     
     public setDomElement(element: Element): void {
         this.element = element
+
+        window.dispatchEvent(new CustomEvent("enemySpawned", { detail: this}))
     }
 }

@@ -14,10 +14,9 @@ export class MoveEnemy {
     this.enemySize = enemy.size
   }
 
-  public create(): void {
+  protected spawnEnemy(): void {
     const targetCell = document.querySelector(`#gameTable .cell[row="0"][col="0"]`);
     const { y } = this.getCenterPoint(targetCell)
-
 
     const enemy = document.createElement("div");
     enemy.className = "enemy";
@@ -32,11 +31,9 @@ export class MoveEnemy {
   }
 
   public handle(): void {
-    this.movement = setInterval(() => {
-      if (!this.enemyElement) {
-        this.create()
-      }
+    this.spawnEnemy()
 
+    this.movement = setInterval(() => {
       this.enemy.move();
 
       if (this.noMovesLeft()) {
