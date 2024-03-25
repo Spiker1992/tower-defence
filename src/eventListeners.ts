@@ -70,10 +70,7 @@ function findEnemiesToAttack(tower: Tower): void {
         const enemiesInTheSquare = enemySpatialGrid[positionHash]
         
         enemiesInTheSquare.forEach(enemy => {
-            if (!enemy.element) return
-            if (!enemyInRange(tower, enemy.getPosition(), enemy.size)) return
-
-            TowerShooting.attackEnemy(tower, enemy)
+            tower.attack(enemy);
         })
     })
 }
@@ -88,10 +85,7 @@ function notifiyTowers(enemy: Enemy): void {
     if (!!towersWithinRange === false) return
 
     towersWithinRange.forEach(tower => {
-        if (!tower.canShoot) return 
-        if (!enemyInRange(tower, enemy.getPosition(), enemy.size))  return 
-        
-        TowerShooting.attackEnemy(tower, enemy)
+        tower.attack(enemy)
     })
 }
 

@@ -1,5 +1,7 @@
 import { getCenterPoint } from "../helpers/grid";
 import { Coordinate } from "../interfaces";
+import { enemyInRange } from "../utils";
+import { Enemy } from "./enemy";
 
 export interface ITowerAttributes {
     x: number;
@@ -76,6 +78,17 @@ export class Tower implements ITower {
         }
     }
 
+    public attack(enemy: Enemy): boolean {
+        if (!this.canShoot) return false
+        if (!enemy.isDead()) return false
+        if (!enemyWithinRange(this, enemy)) return false
+
+        enemy.reduceLife(this.damage)
+        this.reload()
+
+        return true
+    }
+
     public reload(): void {
         this.canShoot = false
 
@@ -101,4 +114,8 @@ export class Tower implements ITower {
         })
         window.dispatchEvent(towerReloaded)
     }
+}
+
+function enemyWithinRange(tower: Tower, enemy: Enemy) {
+    return !enemyInRange(tower, enemy.getPosition(), enemy.size);
 }

@@ -36,17 +36,7 @@ export class TowerShooting {
         if (targetEnemy) {
             
         }
-    }
-
-    public static attackEnemy(tower: ITower, enemy: Enemy): void {
-        const attributes = tower.attributes();
-        tower.reload()
-        enemy.reduceLife(attributes.damage);
-
-        if (enemy.isDead()) {
-            Enemies.getInstance().remove(enemy);
-        }
-    }
+    } 
 
     public static enemyInRange(tower: ITower, enemy: Enemy): Boolean {
         const attributes = tower.attributes();
