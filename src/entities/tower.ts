@@ -80,7 +80,7 @@ export class Tower implements ITower {
 
     public attack(enemy: Enemy): boolean {
         if (!this.canShoot) return false
-        if (!enemy.isDead()) return false
+        if (enemy.isDead()) return false
         if (!enemyWithinRange(this, enemy)) return false
 
         enemy.reduceLife(this.damage)
@@ -117,5 +117,5 @@ export class Tower implements ITower {
 }
 
 function enemyWithinRange(tower: Tower, enemy: Enemy) {
-    return !enemyInRange(tower, enemy.getPosition(), enemy.size);
+    return enemyInRange(tower, enemy.getPosition(), enemy.size);
 }
