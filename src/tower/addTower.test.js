@@ -5,9 +5,9 @@
 import { describe, expect, test, beforeEach } from '@jest/globals';
 import { Tower } from '../entities/tower';
 import { AddTower } from './addTower';
-import { Grid } from '../state/grid';
-import { Towers } from '../state/towers';
-import { renderGrid } from '../views/renderGrid';
+import { Grid } from '../placements/grid';
+import { Towers } from './towers';
+import { renderGrid } from '../placements/renderGrid';
 import { generateGrid } from '../helpers/grid';
 import { InvalidLocationError } from '../exceptions/InvalidLocationError';
 import { PathPlacement } from '../placements/pathPlacement';

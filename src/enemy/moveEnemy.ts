@@ -1,5 +1,5 @@
-import { Enemy } from "../entities/enemy";
-import { Enemies } from "../state/enemies";
+import { Enemy } from "./enemy";
+import { Enemies } from "./enemies";
 
 export class MoveEnemy {
   protected enemy: Enemy
@@ -47,6 +47,11 @@ export class MoveEnemy {
 
   protected completeMove(): void {
     const enemyPosition = this.enemy.getPosition();
+    console.log(this.enemy)
+    if  (this.enemy.id == 3){
+      console.log("VLAD")
+      console.log(enemyPosition)
+    }
     this.animateEnemy(this.enemyElement, enemyPosition.col, enemyPosition.row)
   }
 

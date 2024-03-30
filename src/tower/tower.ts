@@ -1,7 +1,7 @@
 import { getCenterPoint } from "../helpers/grid";
 import { Coordinate } from "../interfaces";
 import { enemyInRange } from "../utils";
-import { Enemy } from "./enemy";
+import { Enemy } from "../enemy/enemy";
 
 export interface ITowerAttributes {
     x: number;

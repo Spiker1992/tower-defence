@@ -1,6 +1,6 @@
-import { MoveEnemy } from "../views/moveEnemy"; 
+import { MoveEnemy } from "./moveEnemy"; 
 import { Coordinate } from "../interfaces";
-import { Enemy } from "../entities/enemy";
+import { Enemy } from "./enemy";
 
 export class EnemySpawner {
   private enemySpec: any[];
@@ -16,19 +16,20 @@ export class EnemySpawner {
   public startSpawning(): void {
     let enemyId: number = 1;
     let index = 0;
-    let spawnedEnemyCount = 1;
+    let spawnedEnemyCount = 0;
 
     console.log("Start spawning enemies");
     const enemyPath = [...this.path]; 
 
     const movement = setInterval(() => {
+      console.log(enemyId)
       if (index >= this.enemySpec.length) {
         clearInterval(movement);
         console.log("Finished spawning enemies");
         return
       }
 
-      if (spawnedEnemyCount > this.enemySpec[index][1]) {
+      if (spawnedEnemyCount >= this.enemySpec[index][1]) {
         spawnedEnemyCount = 0
         index += 1
         return 
@@ -37,7 +38,8 @@ export class EnemySpawner {
       const EnemyType = this.enemySpec[index][0];
       const enemy: Enemy = new EnemyType(enemyPath, enemyId);
 
-      (new MoveEnemy(enemy)).handle();
+      const moveEnemy = (new MoveEnemy(enemy))
+      moveEnemy.handle();
 
       enemyId += 1;
       spawnedEnemyCount += 1;

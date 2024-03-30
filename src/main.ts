@@ -1,5 +1,5 @@
-import { Grid } from "./state/grid"
-import { renderGrid } from "./views/renderGrid"
+import { Grid } from "./placements/grid"
+import { renderGrid } from "./placements/renderGrid"
 import { Level1 } from "./placements/levels/level1"
 import "./eventListeners"
 

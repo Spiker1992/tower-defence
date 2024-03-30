@@ -1,12 +1,12 @@
-import { BeastEnemy } from "../../entities/enemies/beastEnemy";
-import { TinyEnemy } from "../../entities/enemies/tinyEnemy";
-import { Enemy } from "../../entities/enemy";
+import { BeastEnemy } from "../../enemy/enemies/beastEnemy";
+import { TinyEnemy } from "../../enemy/enemies/tinyEnemy";
+import { Enemy } from "../../enemy/enemy";
 import { PathPlacement } from "../pathPlacement";
 
 export class Level1 extends PathPlacement { 
     protected enemySpec: [typeof Enemy, number][] = [
-        [BeastEnemy, 1],
-        // [TinyEnemy, 1],
+        [BeastEnemy, 2],
+        [TinyEnemy, 1],
     ];
 
     protected setupEnemyPath(): void {
