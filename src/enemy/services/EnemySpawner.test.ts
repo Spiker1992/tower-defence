@@ -2,15 +2,15 @@
  * @jest-environment jsdom
  */
 
-import { Enemies } from "./enemies";
+import { Enemies } from "../store/enemies";
 import { MoveEnemy } from "./moveEnemy";
 import { EnemySpawner } from "./EnemySpawner";
 import { EventEmitter } from "events";
-import { Coordinate } from "../interfaces";
-import { Enemy } from "./enemy";
+import { Coordinate } from "../../commons/interfaces";
+import { Enemy } from "../enemy";
 import { describe, expect, jest, beforeEach, afterEach, it } from '@jest/globals';
-import { TinyEnemy } from "./enemies/tinyEnemy";
-import { BeastEnemy } from "./enemies/beastEnemy";
+import { TinyEnemy } from "../enemies/tinyEnemy";
+import { BeastEnemy } from "../enemies/beastEnemy";
 
 describe("EnemySpawner", () => {
   let enemiesInstance: Enemies;

@@ -1,5 +1,5 @@
-import { Enemy } from "./enemy";
-import { Enemies } from "./enemies";
+import { Enemy } from "../enemy";
+import { Enemies } from "../store/enemies";
 
 export class MoveEnemy {
   protected enemy: Enemy

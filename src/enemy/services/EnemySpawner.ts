@@ -1,6 +1,6 @@
 import { MoveEnemy } from "./moveEnemy"; 
-import { Coordinate } from "../interfaces";
-import { Enemy } from "./enemy";
+import { Coordinate } from "../../commons/interfaces";
+import { Enemy } from "../enemy";
 
 export class EnemySpawner {
   private enemySpec: any[];

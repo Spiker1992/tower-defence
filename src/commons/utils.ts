@@ -1,4 +1,4 @@
-import { Tower } from "./tower/tower";
+import { Tower } from "../tower/tower";
 
 function isSquareOverlappingCircle(squareX, squareY, squareSideLength, circleX, circleY, circleRadius) {
     // Calculate the square's corners

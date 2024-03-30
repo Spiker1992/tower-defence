@@ -1,4 +1,4 @@
-import { TOWER_MARKER } from "../constants";
+import { TOWER_MARKER } from "../../commons/constants";
 import { PlacementManager } from "./placementManager";
 
 export class TowerPlacement extends PlacementManager {

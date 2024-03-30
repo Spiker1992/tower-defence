@@ -1,8 +1,8 @@
 import { generateGrid } from "../helpers/grid";
-import { Coordinate } from "../interfaces";
-import { EnemyPlacement } from "./enemyPlacement";
-import { PathPlacement } from "./pathPlacement";
-import { TowerPlacement } from "./towerPlacement";
+import { Coordinate } from "../commons/interfaces";
+import { EnemyPlacement } from "./placement/enemyPlacement";
+import { PathPlacement } from "./placement/pathPlacement";
+import { TowerPlacement } from "./placement/towerPlacement";
 
 export class Grid {
     public path: PathPlacement

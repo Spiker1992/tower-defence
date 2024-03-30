@@ -1,4 +1,4 @@
-import { ITower } from "./tower";
+import { ITower } from "../tower";
 
 export class Towers {
     protected data: ITower[] = []

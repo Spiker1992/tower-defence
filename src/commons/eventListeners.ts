@@ -1,7 +1,7 @@
-import { Enemy } from "./enemy/enemy";
-import { Tower } from "./tower/tower";
+import { Enemy } from "../enemy/enemy";
+import { Tower } from "../tower/tower";
 import { Coordinate } from "./interfaces"; 
-import { Grid } from "./placements/grid";
+import { Grid } from "../grid/grid";
 import { enemyInRange } from "./utils";
 
 

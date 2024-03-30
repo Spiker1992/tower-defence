@@ -1,7 +1,7 @@
 import { BeastEnemy } from "../../enemy/enemies/beastEnemy";
 import { TinyEnemy } from "../../enemy/enemies/tinyEnemy";
 import { Enemy } from "../../enemy/enemy";
-import { PathPlacement } from "../pathPlacement";
+import { PathPlacement } from "../placement/pathPlacement";
 
 export class Level1 extends PathPlacement { 
     protected enemySpec: [typeof Enemy, number][] = [

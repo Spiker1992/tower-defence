@@ -1,7 +1,7 @@
-import { PATH_MARKER } from "../constants";
-import { Enemy } from "../enemy/enemy";
+import { PATH_MARKER } from "../../commons/constants";
+import { Enemy } from "../../enemy/enemy";
 import { PlacementManager } from "./placementManager"; 
-import { EnemySpawner } from "../enemy/EnemySpawner";
+import { EnemySpawner } from "../../enemy/services/EnemySpawner";
 
 export abstract class PathPlacement extends PlacementManager {
     public MARKER: string = PATH_MARKER

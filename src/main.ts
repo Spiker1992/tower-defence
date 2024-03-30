@@ -1,7 +1,7 @@
-import { Grid } from "./placements/grid"
-import { renderGrid } from "./placements/renderGrid"
-import { Level1 } from "./placements/levels/level1"
-import "./eventListeners"
+import { Grid } from "./grid/grid"
+import { renderGrid } from "./grid/services/renderGrid"
+import { Level1 } from "./grid/levels/level1"
+import "./commons/eventListeners"
 
 const grid = Grid.getInstance()
 grid.generateGrid(5,5)
