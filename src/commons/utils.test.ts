@@ -15,7 +15,6 @@ describe("get tower  center", () => {
     // col: 0, 1, 2, 3 => 0 to 50 (0), 50 to 100 (1), 100 to 150 (2), 150 to 200 (3)
     // row 4, 5 => 200 to 250 (4), 250 to 300 (5)
 
-
     const expected = { col: 175, row: 275 }
 
     expect(actual).toEqual(expected)
