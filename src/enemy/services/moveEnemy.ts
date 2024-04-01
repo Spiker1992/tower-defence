@@ -35,7 +35,7 @@ export class MoveEnemy {
 
     this.movement = setInterval(() => {
       this.enemy.move();
-
+      
       if (this.noMovesLeft()) {
         this.lastMove()
         return
@@ -47,11 +47,6 @@ export class MoveEnemy {
 
   protected completeMove(): void {
     const enemyPosition = this.enemy.getPosition();
-    console.log(this.enemy)
-    if  (this.enemy.id == 3){
-      console.log("VLAD")
-      console.log(enemyPosition)
-    }
     this.animateEnemy(this.enemyElement, enemyPosition.col, enemyPosition.row)
   }
 

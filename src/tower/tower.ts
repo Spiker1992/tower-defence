@@ -106,5 +106,5 @@ export class Tower implements ITower {
 }
 
 function enemyWithinRange(tower: Tower, enemy: Enemy) {
-    return enemyInRange(tower, enemy.getPosition(), enemy.size);
+    return enemyInRange(tower, 50, enemy.getPosition(), enemy.size);
 }

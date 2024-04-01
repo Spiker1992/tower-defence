@@ -32,7 +32,6 @@ window.addEventListener("enemyMoved", event => {
 
     updateAvailableEnemyStore(enemy)
     notifiyTowers(enemy)
-    console.log(enemy.life)
 });
 
 function createSpatialGrids(paths: Coordinate[]): void {
@@ -51,7 +50,7 @@ function addTowerToTheStore(tower: Tower): void {
     const grid = Grid.getInstance()
       
     grid.path.all().forEach(path => {
-        const result = enemyInRange(tower, path)
+        const result = enemyInRange(tower, 50, path)
 
         if (!result) return
 

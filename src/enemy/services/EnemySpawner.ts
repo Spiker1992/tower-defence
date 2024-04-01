@@ -19,10 +19,8 @@ export class EnemySpawner {
     let spawnedEnemyCount = 0;
 
     console.log("Start spawning enemies");
-    const enemyPath = [...this.path]; 
 
     const movement = setInterval(() => {
-      console.log(enemyId)
       if (index >= this.enemySpec.length) {
         clearInterval(movement);
         console.log("Finished spawning enemies");
@@ -36,7 +34,7 @@ export class EnemySpawner {
       }
 
       const EnemyType = this.enemySpec[index][0];
-      const enemy: Enemy = new EnemyType(enemyPath, enemyId);
+      const enemy: Enemy = new EnemyType([...this.path], enemyId);
 
       const moveEnemy = (new MoveEnemy(enemy))
       moveEnemy.handle();
