@@ -1,4 +1,4 @@
-import { ENEMY_MARKER } from "../constants";
+import { ENEMY_MARKER } from "../../commons/constants";
 import { PlacementManager } from "./placementManager";
 
 export class EnemyPlacement extends PlacementManager {

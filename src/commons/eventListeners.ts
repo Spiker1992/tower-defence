@@ -1,7 +1,7 @@
-import { Enemy } from "./entities/enemy";
-import { Tower } from "./entities/tower";
+import { Enemy } from "../enemy/enemy";
+import { Tower } from "../tower/tower";
 import { Coordinate } from "./interfaces"; 
-import { Grid } from "./state/grid";
+import { Grid } from "../grid/grid";
 import { enemyInRange } from "./utils";
 
 
@@ -32,7 +32,6 @@ window.addEventListener("enemyMoved", event => {
 
     updateAvailableEnemyStore(enemy)
     notifiyTowers(enemy)
-    console.log(enemy.life)
 });
 
 function createSpatialGrids(paths: Coordinate[]): void {
@@ -51,7 +50,7 @@ function addTowerToTheStore(tower: Tower): void {
     const grid = Grid.getInstance()
       
     grid.path.all().forEach(path => {
-        const result = enemyInRange(tower, path)
+        const result = enemyInRange(tower, 50, path)
 
         if (!result) return
 

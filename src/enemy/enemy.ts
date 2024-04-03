@@ -32,7 +32,7 @@ export class Enemy {
         let step = 1
         
         const notification = setInterval(() => {
-            if (step >= max) {
+            if (step > max) {
                 clearInterval(notification)
             }
 

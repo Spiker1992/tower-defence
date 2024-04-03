@@ -1,5 +1,5 @@
-import { Tower } from "../entities/tower";
-import { AddTower } from "../services/addTower";
+import { Tower } from "../../tower/tower";
+import { AddTower } from "../../tower/services/addTower";
 
 export function firstOrCreateGameTable(): HTMLElement {
     let gameTable: HTMLElement = document.getElementById("#gameTable")

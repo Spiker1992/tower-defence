@@ -1,4 +1,4 @@
-import { Enemy } from "../entities/enemy";
+import { Enemy } from "../enemy";
 
 export class Enemies {
     protected data: Enemy[] = []

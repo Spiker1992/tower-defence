@@ -5,12 +5,12 @@
 import { describe, expect, test, beforeEach } from '@jest/globals';
 import { Tower } from '../entities/tower';
 import { AddTower } from './addTower';
-import { Grid } from '../state/grid';
-import { Towers } from '../state/towers';
-import { renderGrid } from '../views/renderGrid';
-import { generateGrid } from '../helpers/grid';
-import { InvalidLocationError } from '../exceptions/InvalidLocationError';
-import { PathPlacement } from '../placements/pathPlacement';
+import { Grid } from '../../grid/grid';
+import { Towers } from './towers';
+import { renderGrid } from '../../grid/services/renderGrid';
+import { generateGrid } from '../../helpers/grid';
+import { InvalidLocationError } from '../../exceptions/InvalidLocationError';
+import { PathPlacement } from '../../grid/placement/pathPlacement';
 
 
 describe('add tower service', () => {
