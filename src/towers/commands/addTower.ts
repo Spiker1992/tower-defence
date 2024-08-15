@@ -1,7 +1,7 @@
-import { Tower } from "../entities/tower";
-import { InvalidLocationError } from "../exceptions/InvalidLocationError";
-import { Grid } from "../state/grid";
-import { Towers } from "../towers/state/towers";
+import { Tower } from "../../entities/tower";
+import { InvalidLocationError } from "../../exceptions/InvalidLocationError";
+import { Grid } from "../../state/grid";
+import { Towers } from "../state/towers";
 
 export class AddTower {
     protected tower: Tower
@@ -13,7 +13,6 @@ export class AddTower {
     public handle(): void {
         this.isFreeCoordinate()
         
-
         const store = Towers.getInstance()
         store.add(this.tower)
 
