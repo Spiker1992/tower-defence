@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals';
-import { Tower } from "../entities/tower"
+import { Tower } from "../../entities/tower"
 import { Towers } from "./towers"
 
 

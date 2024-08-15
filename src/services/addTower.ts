@@ -1,7 +1,7 @@
 import { Tower } from "../entities/tower";
 import { InvalidLocationError } from "../exceptions/InvalidLocationError";
 import { Grid } from "../state/grid";
-import { Towers } from "../state/towers";
+import { Towers } from "../towers/state/towers";
 
 export class AddTower {
     protected tower: Tower
