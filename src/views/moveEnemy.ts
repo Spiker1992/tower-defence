@@ -1,5 +1,4 @@
 import { Enemy } from "../entities/enemy";
-import { Enemies } from "../state/enemies";
 
 export class MoveEnemy {
   protected enemy: Enemy
@@ -87,9 +86,6 @@ export class MoveEnemy {
 
     const deleteElement = setInterval(() => {
       this.enemyElement.remove()
-
-      const enemies = Enemies.getInstance()
-      enemies.remove(this.enemy)
 
       clearInterval(deleteElement)
     }, this.speed)
