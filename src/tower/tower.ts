@@ -1,7 +1,7 @@
 import { getCenterPoint } from "../helpers/grid";
-import { Coordinate } from "../interfaces";
-import { enemyInRange } from "../utils";
-import { Enemy } from "./enemy";
+import { Coordinate } from "../commons/interfaces";
+import { enemyInRange } from "../commons/utils";
+import { Enemy } from "../enemy/enemy";
 
 export interface ITowerAttributes {
     x: number;
@@ -106,5 +106,5 @@ export class Tower implements ITower {
 }
 
 function enemyWithinRange(tower: Tower, enemy: Enemy) {
-    return enemyInRange(tower, enemy.getPosition(), enemy.size);
+    return enemyInRange(tower, 50, enemy.getPosition(), enemy.size);
 }

@@ -1,4 +1,4 @@
-import { Enemy } from "../entities/enemy";
+import { Enemy } from "../enemy";
 
 export class MoveEnemy {
   protected enemy: Enemy
@@ -34,7 +34,7 @@ export class MoveEnemy {
 
     this.movement = setInterval(() => {
       this.enemy.move();
-
+      
       if (this.noMovesLeft()) {
         this.lastMove()
         return

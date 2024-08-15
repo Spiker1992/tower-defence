@@ -1,4 +1,4 @@
-import { Coordinate } from "../interfaces";
+import { Coordinate } from "../../commons/interfaces";
 
 export class PlacementManager {
     protected data: Coordinate[] = []
