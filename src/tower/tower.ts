@@ -1,4 +1,4 @@
-import { getCenterPoint } from "../helpers/grid";
+
 import { Coordinate } from "../commons/interfaces";
 import { enemyInRange } from "../commons/utils";
 import { Enemy } from "../enemy/enemy";
@@ -14,7 +14,6 @@ export interface ITowerAttributes {
 export interface ITower {
     getId(): number;
     getCoords(): Coordinate;
-    render(): void;
     reload(): void;
 }
 
@@ -51,21 +50,6 @@ export class Tower implements ITower {
         return this.towerSize
     }
 
-    public render(): void {
-        const targetCell = document.querySelector(`#gameTable .cell[row="${this.coords.row}"][col="${this.coords.col}"]`);
-        const { x, y } = getCenterPoint(targetCell)
-
-        const tower = document.createElement("div");
-        const correction = this.towerSize / 2
-        tower.className = "tower";
-        tower.id = `tower${this.id}`
-        tower.style.top = `${y - correction}px`
-        tower.style.left = `${x - correction}px`
-        tower.style.outlineOffset = `${this.range - correction}px`;
-
-        document.getElementById("grid").appendChild(tower);
-        this.element = tower;
-    }
 
     public attack(enemy: Enemy): boolean {
         if (!this.canShoot) return false

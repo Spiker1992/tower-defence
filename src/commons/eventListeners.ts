@@ -3,11 +3,18 @@ import { Tower } from "../tower/tower";
 import { Coordinate } from "./interfaces"; 
 import { Grid } from "../grid/grid";
 import { enemyInRange } from "./utils";
+import renderTower from "../grid/commands/renderTower";
 
 
 let enemySpatialGrid = []
 let towerSpatialGrid = []
 let towerCoverage = []
+
+window.addEventListener("towerWasPlaced", event => {
+    console.log("Tower was placed", event.detail.tower)
+    const tower: Tower = event.detail.tower
+    renderTower(tower)
+});
 
 function getCoordsHash(coord: Coordinate): string {
     return `${coord.row}${coord.col}`
@@ -17,7 +24,7 @@ window.addEventListener("path-set", event => {
     createSpatialGrids(event.detail.paths)
 })
 
-window.addEventListener("towerAdded", event => {
+window.addEventListener("towerWasPlaced", event => {
     const tower: Tower = event.detail.tower
     addTowerToTheStore(tower)
     tower.reload()
