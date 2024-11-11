@@ -63,12 +63,10 @@ function addTowerToTheStore(tower: Tower): void {
 
 function findEnemiesToAttack(tower: Tower): void {
     const currentCoverage = towerCoverage[tower.getId()]
-    
-    currentCoverage.forEach(positionHash => {
+    currentCoverage.some(positionHash => {
         const enemiesInTheSquare = enemySpatialGrid[positionHash]
-        
-        enemiesInTheSquare.forEach(enemy => {
-            tower.attack(enemy);
+        return enemiesInTheSquare.some(enemy => {
+            return tower.attack(enemy)
         })
     })
 }

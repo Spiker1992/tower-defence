@@ -53,8 +53,8 @@ export function getGridSquareToCoordinates(coordinate: Coordinate, square_size: 
 
 export function buildBoxFromCoordinates(enemy: Coordinate, square_size: number = 50): Coordinate[] {
   const square_top_left = {
-    col: (enemy.col), 
-    row: (enemy.row),
+    col: (enemy.col) * square_size, 
+    row: (enemy.row) * square_size,
   }
   const square_bottom_right = {
     col: (enemy.col) + square_size, 
@@ -74,6 +74,7 @@ export function enemyInRange(tower: Tower, square_size: number = 50, enemy: Coor
   const tower_range = getTowerRange(tower)
   
   enemy_size = enemy_size || square_size
-  const enemy_coords = buildBoxFromCoordinates(enemy, enemy_size)
+  const enemy_coords = buildBoxFromCoordinates(enemy, square_size)
+
   return checkOverlap(tower_range, tower_centre.col, tower_centre.row, enemy_coords[0].col, enemy_coords[0].row, enemy_coords[1].col, enemy_coords[1].row)
 }
