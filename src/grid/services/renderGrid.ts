@@ -1,5 +1,5 @@
 import { Tower } from "../../tower/tower";
-import { AddTower } from "../../tower/services/addTower";
+import { PlaceTower } from "../../tower/commands/placeTower";
 
 export function firstOrCreateGameTable(): HTMLElement {
     let gameTable: HTMLElement = document.getElementById("#gameTable")
@@ -43,7 +43,7 @@ export function renderGrid(grid: string[][]) {
             newCell.setAttribute("row", `${row}`)
             newCell.setAttribute("col", `${col}`)
             newCell.onclick = () => {
-                (new AddTower(new Tower(parseInt(`${col}${row}`) , { col: col, row: row }))).handle();
+                (new PlaceTower(new Tower(parseInt(`${col}${row}`) , { col: col, row: row }))).handle();
             }
             newCell.textContent = grid[row][col];
             newCell.className = "cell";

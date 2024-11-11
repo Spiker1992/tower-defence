@@ -3,7 +3,7 @@ import { InvalidLocationError } from "../../exceptions/InvalidLocationError";
 import { Grid } from "../../grid/grid";
 import { Towers } from "../store/towers";
 
-export class AddTower {
+export class PlaceTower {
     protected tower: Tower
 
     public constructor(tower: Tower) {
@@ -11,20 +11,25 @@ export class AddTower {
     }
 
     public handle(): void {
+        console.log("Placing tower")
         this.isFreeCoordinate()
-        
-        const store = Towers.getInstance()
-        store.add(this.tower)
 
-        this.tower.render()
+        this.persistTower()
+        this.triggerEvent()
+    }
 
-        const towerAdded = new CustomEvent("towerAdded", {
+    protected triggerEvent(): void {
+        const towerWasPlaced = new CustomEvent("towerWasPlaced", {
             detail: {
                 tower: this.tower,
             }
         })
-        window.dispatchEvent(towerAdded)
+        window.dispatchEvent(towerWasPlaced)
+    }
 
+    protected persistTower(): void {
+        const store = Towers.getInstance()
+        store.add(this.tower)
     }
 
     protected isFreeCoordinate(): void {
