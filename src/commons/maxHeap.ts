@@ -1,5 +1,3 @@
-
-
 class MaxHeap {
     heap: [number, number][] = [];
     positions: { [key: number]: number } = {};
@@ -9,7 +7,57 @@ class MaxHeap {
         this.positions = {};
     }
 
-    insertOrUpdate(enemy_id: number, distanceTraveled: number) {
+    public peak(): [number, number] {
+        return this.heap[0];
+    }
+
+    public length(): number {
+        return this.heap.length;
+    }
+
+    public pop(): number {
+        const enemy_id = this.peak()[0]
+        
+        return this.deleteEnemy(enemy_id)
+    }
+
+    protected deleteAtIndex(index: number): number {
+        this.swap(index, this.length() - 1);
+        const result = this.heap.pop();
+        delete this.positions[result[0]];
+
+        this.bubbleDown(index);
+
+        return result[0]
+    }
+
+    public deleteEnemy(enemy_id: number): number {
+        const index = this.positions[enemy_id];
+        
+        return this.deleteAtIndex(index)
+    }
+
+    protected bubbleDown(index: number): void {
+        while (index < this.length() ) {
+            const leftChildIndex = 2 * index + 1;
+            const rightChildIndex = 2 * index + 2;
+
+            const leftVal = this.heap[leftChildIndex] ? this.heap[leftChildIndex][1] : -Infinity;
+            const rightVal = this.heap[rightChildIndex] ? this.heap[rightChildIndex][1] : -Infinity;
+
+            const targetIndex = leftVal > rightVal ? leftChildIndex : rightChildIndex;
+            const target = this.heap[targetIndex]
+
+            if (target && target[1] > this.heap[index][1]) {
+                this.swap(targetIndex, index);
+                index = targetIndex;
+            } else{
+                break
+            }
+        }
+    }
+
+    public insertOrUpdate(enemy_id: number, distanceTraveled: number): void {
         const id = enemy_id;
         
         if (id in this.positions) {
@@ -17,25 +65,16 @@ class MaxHeap {
             this.heap[index] = [enemy_id, distanceTraveled];
 
             this.bubbleUp(index); 
-            // this.bubbleDown(index);
         } else {
-            // Insert new enemy
             const array_length = this.heap.push([enemy_id, distanceTraveled]);
             const index = array_length - 1;
             this.positions[id] = index;
             
-            // we assume that we dont need to bubble up
-            // since all enemies start at 0
             this.bubbleUp(index);
         }
     }
 
-    bubbleUp(index: number) {
-        // To insert an element to a heap, we perform the following steps:
-
-        // 2. Compare the added element with its parent; if they are in the correct order, stop.
-        // 3. If not, swap the element with its parent and return to the previous step.
-
+    protected bubbleUp(index: number): void {
         while (index > 0) {
             const parentIndex = Math.floor((index - 1) / 2);
             
@@ -45,21 +84,15 @@ class MaxHeap {
             } else{
                 break
             }
-            
         }
     }
 
-    swap(index1: number, index2: number) {
-        // swap enemies [1, 1.5] and positions [1 => 0, 2 => 1]
+    protected swap(index1: number, index2: number): void {
         [this.heap[index1], this.heap[index2]] = [this.heap[index2], this.heap[index1]];
-        // [1.5, 1]
         
-        // swap enemy positions [1 => 0, 2 => 1] should be [1 => 1, 2 => 0]
         this.positions[this.heap[index2][0]] = index2
         this.positions[this.heap[index1][0]] = index1
-        
     }
-
 }
 
 export default MaxHeap;
