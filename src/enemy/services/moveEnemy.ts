@@ -85,7 +85,7 @@ export class MoveEnemy {
     clearInterval(this.movement)
 
     const deleteElement = setInterval(() => {
-      this.enemyElement.remove()
+      this.enemy.remove()
 
       clearInterval(deleteElement)
     }, this.speed)
