@@ -3,6 +3,7 @@ export class Enemy {
     private prevPosition: { col: number; row: number };
     private path: { col: number; row: number }[];
     public speed: number = 1000
+    public distanceTraveled: number = 0
     public size: number = 20
     public element: Element
     public id: number
@@ -17,7 +18,7 @@ export class Enemy {
 
     public reduceLife(damage: number): void  {
         this.life -= damage
-        
+        console.log(this)
         if (this.life <= 0) {
             this.element.remove()
         }
@@ -34,7 +35,10 @@ export class Enemy {
         const notification = setInterval(() => {
             if (step > max) {
                 clearInterval(notification)
+                return
             }
+
+            this.distanceTraveled += 500/max
 
             const enemyMoved = new CustomEvent("enemyMoved", {
                 detail: {
