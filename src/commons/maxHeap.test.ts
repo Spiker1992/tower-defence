@@ -65,7 +65,7 @@ describe('get furthest enemy', () => {
   });
 
   it('get furthest enemy', () => {
-    expect(heap.peak()).toEqual([1, 4])
+    expect(heap.peek()).toEqual([1, 4])
   })
 })
 
