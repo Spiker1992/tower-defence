@@ -7,7 +7,7 @@ class MaxHeap {
         this.positions = {};
     }
 
-    public peak(): [number, number] {
+    public peek(): [number, number] {
         return this.heap[0];
     }
 
@@ -16,7 +16,7 @@ class MaxHeap {
     }
 
     public pop(): number {
-        const enemy_id = this.peak()[0]
+        const enemy_id = this.peek()[0]
         
         return this.deleteEnemy(enemy_id)
     }
