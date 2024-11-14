@@ -57,16 +57,16 @@ class MaxHeap {
         }
     }
 
-    public insertOrUpdate(enemy_id: number, distanceTraveled: number): void {
+    public insertOrUpdate(enemy_id: number, distanceTravelled: number): void {
         const id = enemy_id;
         
         if (id in this.positions) {
             const index = this.positions[id];
-            this.heap[index] = [enemy_id, distanceTraveled];
+            this.heap[index] = [enemy_id, distanceTravelled];
 
             this.bubbleUp(index); 
         } else {
-            const array_length = this.heap.push([enemy_id, distanceTraveled]);
+            const array_length = this.heap.push([enemy_id, distanceTravelled]);
             const index = array_length - 1;
             this.positions[id] = index;
             
