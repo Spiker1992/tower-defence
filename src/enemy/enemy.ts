@@ -20,8 +20,19 @@ export class Enemy {
         this.life -= damage
         console.log(this)
         if (this.life <= 0) {
-            this.element.remove()
+            this.remove()
         }
+    }
+
+    public remove(): void {
+        this.element.remove()
+
+        const event = new CustomEvent("enemyRemoved", {
+            detail: {
+              enemy: this,
+            },
+        });
+        window.dispatchEvent(event);
     }
 
     public isDead(): boolean {

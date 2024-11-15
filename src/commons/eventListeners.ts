@@ -4,11 +4,13 @@ import { Coordinate } from "./interfaces";
 import { Grid } from "../grid/grid";
 import { enemyInRange } from "./utils";
 import renderTower from "../grid/commands/renderTower";
+import MaxHeap from "./maxHeap";
 
 
 let enemySpatialGrid = []
 let towerSpatialGrid = []
 let towerCoverage = []
+const enemies_on_the_map = new MaxHeap()
 
 window.addEventListener("towerWasPlaced", event => {
     console.log("Tower was placed", event.detail.tower)
@@ -39,6 +41,12 @@ window.addEventListener("enemyMoved", event => {
 
     updateAvailableEnemyStore(enemy)
     notifiyTowers(enemy)
+});
+
+window.addEventListener("enemyRemoved", event => {
+    const enemy: Enemy = event.detail.enemy
+
+    enemies_on_the_map.deleteEnemy(enemy.id)
 });
 
 function createSpatialGrids(paths: Coordinate[]): void {
@@ -93,6 +101,8 @@ function notifiyTowers(enemy: Enemy): void {
 }
 
 function updateAvailableEnemyStore(enemy: Enemy): void {
+    enemies_on_the_map.insertOrUpdate(enemy.id, enemy.distanceTraveled)
+    console.log("Enemies on the map", enemies_on_the_map)
     if (enemy.getPrevPosition()) {
         const prev_position_key  = `${enemy.getPrevPosition().row}${enemy.getPrevPosition().col}`
         enemySpatialGrid[prev_position_key][enemy.id] = false
