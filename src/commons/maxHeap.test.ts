@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, beforeEach, it } from '@jest/globals';
-import maxHeap from './maxHeap';
+import maxHeap, { EnemyNotFound } from './maxHeap';
 
 describe('add enemy', () => {
   let heap: maxHeap;
@@ -111,6 +111,10 @@ describe('delete enemy', () => {
     expect(heap.deleteEnemy(2)).toEqual(2)
     expect(heap.heap).toEqual([[1,4], [4, 1], [3, 2], [5, 0]])
     expect(heap.positions).toEqual({ 1: 0, 3: 2, 4: 1, 5: 3 })
+  })
+
+  it('delete enemy that is not in the heap', () => {
+    expect(() => heap.deleteEnemy(6)).toThrow(EnemyNotFound)
   })
 })
 

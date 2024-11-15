@@ -1,5 +1,6 @@
 
 import { Coordinate } from "../commons/interfaces";
+import MaxHeap from "../commons/maxHeap";
 import { enemyInRange } from "../commons/utils";
 import { Enemy } from "../enemy/enemy";
 
@@ -16,6 +17,20 @@ export interface ITower {
     getCoords(): Coordinate;
     reload(): void;
 }
+
+const enemies = new MaxHeap()
+
+window.addEventListener("enemyMoved", event => {
+    const enemy: Enemy = event.detail.enemy
+
+    enemies.insertOrUpdate(enemy.id, enemy.distanceTraveled)
+});
+
+window.addEventListener("enemyRemoved", event => {
+    const enemy: Enemy = event.detail.enemy
+
+    enemies.deleteEnemy(enemy.id)
+});
 
 export class Tower implements ITower {
     protected id: number;
