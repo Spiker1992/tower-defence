@@ -18,12 +18,6 @@ window.addEventListener("towerWasPlaced", event => {
     renderTower(tower)
 });
 
-window.addEventListener("towerWasPlaced", event => {
-    console.log("Tower was placed", event.detail.tower)
-    const tower: Tower = event.detail.tower
-    renderTower(tower)
-});
-
 function getCoordsHash(coord: Coordinate): string {
     return `${coord.row}${coord.col}`
 }
