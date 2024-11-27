@@ -38,6 +38,10 @@ class MaxHeap {
         return result[0]
     }
 
+    public hasEnemy(enemy_id: number): boolean {
+        return enemy_id in this.positions;
+    }
+
     public deleteEnemy(enemy_id: number): number {
         if (enemy_id in this.positions) {
             const index = this.positions[enemy_id];

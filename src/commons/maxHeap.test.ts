@@ -47,7 +47,7 @@ describe('add enemy', () => {
     heap.insertOrUpdate(4, 1)
     heap.insertOrUpdate(5, 3.5)
 
-    expect(heap.heap).toEqual([[1, 4], [5, 3.5], [3,2], [4, 1], [2,3]])
+    expect(heap.heap).toEqual([[1, 4], [5, 3.5], [3, 2], [4, 1], [2, 3]])
     expect(heap.positions).toEqual({ 1: 0, 2: 4, 3: 2, 4: 3, 5: 1 })
   });
 })
@@ -84,8 +84,25 @@ describe('update enemy', () => {
   it('update enemy distance', () => {
     heap.insertOrUpdate(5, 5)
 
-    expect(heap.heap).toEqual([[5,5], [1,4], [3,2], [4,1], [2,3]])
+    expect(heap.heap).toEqual([[5, 5], [1, 4], [3, 2], [4, 1], [2, 3]])
     expect(heap.positions).toEqual({ 1: 1, 2: 4, 3: 2, 4: 3, 5: 0 })
+  })
+})
+
+describe('has enemy in the heap', () => {
+  let heap: maxHeap;
+
+  beforeEach(() => {
+    heap = new maxHeap();
+    heap.insertOrUpdate(1, 4)
+  });
+
+  it('has enemy', () => {
+    expect(heap.hasEnemy(1)).toEqual(true)
+  })
+
+  it('doesnt have enemy', () => {
+    expect(heap.hasEnemy(2)).toEqual(false)
   })
 })
 
@@ -109,7 +126,7 @@ describe('delete enemy', () => {
 
   it('delete enemy that is mid way through the heap', () => {
     expect(heap.deleteEnemy(2)).toEqual(2)
-    expect(heap.heap).toEqual([[1,4], [4, 1], [3, 2], [5, 0]])
+    expect(heap.heap).toEqual([[1, 4], [4, 1], [3, 2], [5, 0]])
     expect(heap.positions).toEqual({ 1: 0, 3: 2, 4: 1, 5: 3 })
   })
 
