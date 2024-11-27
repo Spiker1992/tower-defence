@@ -1,6 +1,7 @@
 import { MoveEnemy } from "./moveEnemy"; 
 import { Coordinate } from "../../commons/interfaces";
 import { Enemy } from "../enemy";
+import { Enemies } from "../store/enemies";
 
 export class EnemySpawner {
   private enemySpec: any[];
@@ -38,6 +39,8 @@ export class EnemySpawner {
 
       const moveEnemy = (new MoveEnemy(enemy))
       moveEnemy.handle();
+
+      Enemies.getInstance().add(enemy)
 
       enemyId += 1;
       spawnedEnemyCount += 1;
