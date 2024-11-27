@@ -3,6 +3,7 @@ import { Coordinate } from "../commons/interfaces";
 import MaxHeap from "../commons/maxHeap";
 import { enemyInRange } from "../commons/utils";
 import { Enemy } from "../enemy/enemy";
+import { Enemies } from "../enemy/store/enemies";
 
 export interface ITowerAttributes {
     x: number;
@@ -18,19 +19,6 @@ export interface ITower {
     reload(): void;
 }
 
-const enemies = new MaxHeap()
-
-window.addEventListener("enemyMoved", event => {
-    const enemy: Enemy = event.detail.enemy
-
-    enemies.insertOrUpdate(enemy.id, enemy.distanceTraveled)
-});
-
-window.addEventListener("enemyRemoved", event => {
-    const enemy: Enemy = event.detail.enemy
-
-    enemies.deleteEnemy(enemy.id)
-});
 
 export class Tower implements ITower {
     protected id: number;
@@ -44,9 +32,28 @@ export class Tower implements ITower {
     protected element: HTMLDivElement
     protected canShoot: boolean = false
 
+    public enemies = new MaxHeap()
+
     constructor(id: number, coords: Coordinate) {
         this.id = id
         this.coords = coords
+
+        window.addEventListener("enemyMoved", event => {
+            const enemy: Enemy = event.detail.enemy
+            
+            if(enemyWithinRange(this, enemy)) {
+                this.enemies.insertOrUpdate(enemy.id, enemy.distanceTraveled)
+            } else if (this.enemies.hasEnemy(enemy.id)) {
+                this.enemies.deleteEnemy(enemy.id)
+            }
+
+        });
+        
+        window.addEventListener("enemyRemoved", event => {
+            const enemy: Enemy = event.detail.enemy
+        
+            this.enemies.deleteEnemy(enemy.id)
+        });
     }
 
     public getId(): number {
