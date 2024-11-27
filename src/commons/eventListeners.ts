@@ -32,22 +32,22 @@ window.addEventListener("towerWasPlaced", event => {
     tower.reload()
 });
 
-window.addEventListener("towerReloaded", event => {
-    findEnemiesToAttack(event.detail.tower)
-});
+// window.addEventListener("towerReloaded", event => {
+//     findEnemiesToAttack(event.detail.tower)
+// });
 
-window.addEventListener("enemyMoved", event => {
-    const enemy: Enemy = event.detail.enemy
+// window.addEventListener("enemyMoved", event => {
+//     const enemy: Enemy = event.detail.enemy
 
-    updateAvailableEnemyStore(enemy)
-    notifiyTowers(enemy)
-});
+//     updateAvailableEnemyStore(enemy)
+//     // notifiyTowers(enemy)
+// });
 
-window.addEventListener("enemyRemoved", event => {
-    const enemy: Enemy = event.detail.enemy
+// window.addEventListener("enemyRemoved", event => {
+//     const enemy: Enemy = event.detail.enemy
 
-    enemies_on_the_map.deleteEnemy(enemy.id)
-});
+//     enemies_on_the_map.deleteEnemy(enemy.id)
+// });
 
 function createSpatialGrids(paths: Coordinate[]): void {
     enemySpatialGrid = []
@@ -76,41 +76,41 @@ function addTowerToTheStore(tower: Tower): void {
     });
 }
 
-function findEnemiesToAttack(tower: Tower): void {
-    const currentCoverage = towerCoverage[tower.getId()]
-    currentCoverage.some(positionHash => {
-        const enemiesInTheSquare = enemySpatialGrid[positionHash]
-        return enemiesInTheSquare.some(enemy => {
-            return tower.attack(enemy)
-        })
-    })
-}
+// function findEnemiesToAttack(tower: Tower): void {
+//     const currentCoverage = towerCoverage[tower.getId()]
+//     currentCoverage.some(positionHash => {
+//         const enemiesInTheSquare = enemySpatialGrid[positionHash]
+//         return enemiesInTheSquare.some(enemy => {
+//             return tower.attack(enemy)
+//         })
+//     })
+// }
 
 
-function notifiyTowers(enemy: Enemy): void {
-    if (!enemy.getPosition()) return
+// function notifiyTowers(enemy: Enemy): void {
+//     if (!enemy.getPosition()) return
 
-    const positionHash = getCoordsHash(enemy.getPosition())
-    const towersWithinRange: Tower[] = towerSpatialGrid[positionHash]
+//     const positionHash = getCoordsHash(enemy.getPosition())
+//     const towersWithinRange: Tower[] = towerSpatialGrid[positionHash]
 
-    if (!!towersWithinRange === false) return
+//     if (!!towersWithinRange === false) return
 
-    towersWithinRange.forEach(tower => {
-        tower.attack(enemy)
-    })
-}
+//     towersWithinRange.forEach(tower => {
+//         tower.attack(enemy)
+//     })
+// }
 
-function updateAvailableEnemyStore(enemy: Enemy): void {
-    enemies_on_the_map.insertOrUpdate(enemy.id, enemy.distanceTraveled)
-    console.log("Enemies on the map", enemies_on_the_map)
-    if (enemy.getPrevPosition()) {
-        const prev_position_key  = `${enemy.getPrevPosition().row}${enemy.getPrevPosition().col}`
-        enemySpatialGrid[prev_position_key][enemy.id] = false
-        delete enemySpatialGrid[prev_position_key][enemy.id]
-    }
+// function updateAvailableEnemyStore(enemy: Enemy): void {
+//     enemies_on_the_map.insertOrUpdate(enemy.id, enemy.distanceTraveled)
+//     console.log("Enemies on the map", enemies_on_the_map)
+//     if (enemy.getPrevPosition()) {
+//         const prev_position_key  = `${enemy.getPrevPosition().row}${enemy.getPrevPosition().col}`
+//         enemySpatialGrid[prev_position_key][enemy.id] = false
+//         delete enemySpatialGrid[prev_position_key][enemy.id]
+//     }
 
-    if (enemy.getPosition()) {
-        const current_position_key = `${enemy.getPosition().row}${enemy.getPosition().col}`
-        enemySpatialGrid[current_position_key][enemy.id] = enemy
-    }
-}
+//     if (enemy.getPosition()) {
+//         const current_position_key = `${enemy.getPosition().row}${enemy.getPosition().col}`
+//         enemySpatialGrid[current_position_key][enemy.id] = enemy
+//     }
+// }
