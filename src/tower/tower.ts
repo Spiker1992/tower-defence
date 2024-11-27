@@ -43,6 +43,8 @@ export class Tower implements ITower {
             
             if(enemyWithinRange(this, enemy)) {
                 this.enemies.insertOrUpdate(enemy.id, enemy.distanceTraveled)
+
+                this.enemies_updated()
             } else if (this.enemies.hasEnemy(enemy.id)) {
                 this.enemies.deleteEnemy(enemy.id)
             }
@@ -55,6 +57,14 @@ export class Tower implements ITower {
             this.enemies.deleteEnemy(enemy.id)
         });
     }
+    
+    protected enemies_updated() {
+        const enemy_id = this.enemies.peek()[0]
+        const enemy = Enemies.getInstance().hash_map[enemy_id]
+
+        this.attack(enemy)
+    }
+    
 
     public getId(): number {
         return this.id

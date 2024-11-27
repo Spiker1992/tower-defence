@@ -5,6 +5,7 @@
 import { beforeEach, describe, expect, test } from '@jest/globals';
 import { Tower } from "./tower"
 import { TinyEnemy } from "../enemy/enemies/tinyEnemy";
+import { Enemies } from "../enemy/store/enemies";
 
 
 
@@ -75,5 +76,28 @@ describe('Handling enemyRemoved event', () => {
         expect(tower.enemies.length()).toStrictEqual(1)
 
         triggerEnemyRemovedEvent(enemy)
+    })
+})
+
+describe('Enemies updated', () => {
+    jest.useFakeTimers()
+
+    it("when enemies are updated, the tower should shoot", () => {
+        const tower = new Tower(1, { col: 0, row: 1 })
+        tower.reloaded()
+        const enemy = new TinyEnemy()
+        Enemies.getInstance().add(enemy)
+        enemy.currentPosition = { col: 0, row: 1 }
+
+        let eventtriggered = false 
+
+        window.addEventListener("towerReloading", event => {
+            eventtriggered = true
+        })
+
+        triggerEnemyMovedEvent(enemy)
+
+        expect(eventtriggered).toStrictEqual(true)
+        
     })
 })
