@@ -53,8 +53,10 @@ export class Tower implements ITower {
         
         window.addEventListener("enemyRemoved", event => {
             const enemy: Enemy = event.detail.enemy
-        
-            this.enemies.deleteEnemy(enemy.id)
+            
+            if (this.enemies.hasEnemy(enemy.id)) {
+                this.enemies.deleteEnemy(enemy.id)
+            }
         });
     }
     

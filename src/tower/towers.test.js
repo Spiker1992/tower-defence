@@ -77,6 +77,17 @@ describe('Handling enemyRemoved event', () => {
 
         triggerEnemyRemovedEvent(enemy)
     })
+
+    it('handle event by enemy that is not within towers visibility', async () => {
+        const tower = new Tower(1, { col: 0, row: 1 })
+        const enemy = new TinyEnemy()
+
+        jest.spyOn(console, 'error').mockImplementation((error) => {
+            expect(error).toBeFalsy();
+        });
+       
+        triggerEnemyRemovedEvent(enemy)
+    })
 })
 
 describe('Enemies updated', () => {
