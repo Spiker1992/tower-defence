@@ -92,7 +92,7 @@ export class Tower implements ITower {
 
         enemy.reduceLife(this.damage)
         this.reload()
-
+        console.log(`ID ${enemy.id} - remaining life ${enemy.life}`)
         return true
     }
 
