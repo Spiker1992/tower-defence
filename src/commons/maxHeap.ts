@@ -1,3 +1,10 @@
+export class EnemyNotFound extends Error {
+    constructor(message: string) {
+        super(message);
+        this.name = "EnemyNotFound";
+    }
+}
+
 class MaxHeap {
     heap: [number, number][] = [];
     positions: { [key: number]: number } = {};
@@ -31,10 +38,17 @@ class MaxHeap {
         return result[0]
     }
 
+    public hasEnemy(enemy_id: number): boolean {
+        return enemy_id in this.positions;
+    }
+
     public deleteEnemy(enemy_id: number): number {
-        const index = this.positions[enemy_id];
-        
-        return this.deleteAtIndex(index)
+        if (enemy_id in this.positions) {
+            const index = this.positions[enemy_id];
+            return this.deleteAtIndex(index)
+        }
+
+        throw new EnemyNotFound("Enemy is not found in the heap")
     }
 
     protected bubbleDown(index: number): void {

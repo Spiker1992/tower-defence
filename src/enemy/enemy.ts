@@ -18,7 +18,7 @@ export class Enemy {
 
     public reduceLife(damage: number): void  {
         this.life -= damage
-        console.log(this)
+
         if (this.life <= 0) {
             this.remove()
         }

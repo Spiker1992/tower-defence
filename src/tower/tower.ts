@@ -1,7 +1,9 @@
 
 import { Coordinate } from "../commons/interfaces";
+import MaxHeap from "../commons/maxHeap";
 import { enemyInRange } from "../commons/utils";
 import { Enemy } from "../enemy/enemy";
+import { Enemies } from "../enemy/store/enemies";
 
 export interface ITowerAttributes {
     x: number;
@@ -17,6 +19,7 @@ export interface ITower {
     reload(): void;
 }
 
+
 export class Tower implements ITower {
     protected id: number;
     protected coords: Coordinate;
@@ -29,10 +32,41 @@ export class Tower implements ITower {
     protected element: HTMLDivElement
     protected canShoot: boolean = false
 
+    public enemies = new MaxHeap()
+
     constructor(id: number, coords: Coordinate) {
         this.id = id
         this.coords = coords
+
+        window.addEventListener("enemyMoved", event => {
+            const enemy: Enemy = event.detail.enemy
+            
+            if(enemyWithinRange(this, enemy)) {
+                this.enemies.insertOrUpdate(enemy.id, enemy.distanceTraveled)
+
+                this.enemies_updated()
+            } else if (this.enemies.hasEnemy(enemy.id)) {
+                this.enemies.deleteEnemy(enemy.id)
+            }
+
+        });
+        
+        window.addEventListener("enemyRemoved", event => {
+            const enemy: Enemy = event.detail.enemy
+            
+            if (this.enemies.hasEnemy(enemy.id)) {
+                this.enemies.deleteEnemy(enemy.id)
+            }
+        });
     }
+    
+    protected enemies_updated() {
+        const enemy_id = this.enemies.peek()[0]
+        const enemy = Enemies.getInstance().hash_map[enemy_id]
+
+        this.attack(enemy)
+    }
+    
 
     public getId(): number {
         return this.id
@@ -58,7 +92,7 @@ export class Tower implements ITower {
 
         enemy.reduceLife(this.damage)
         this.reload()
-
+        console.log(`ID ${enemy.id} - remaining life ${enemy.life}`)
         return true
     }
 
@@ -89,6 +123,10 @@ export class Tower implements ITower {
     }
 }
 
-function enemyWithinRange(tower: Tower, enemy: Enemy) {
+function enemyWithinRange(tower: Tower, enemy: Enemy) {    
+    const position =  enemy.getPosition()
+
+    if (!position) return false
+    
     return enemyInRange(tower, 50, enemy.getPosition(), enemy.size);
 }
