@@ -1,4 +1,5 @@
 
+import { CELL_SIZE } from "../commons/constants";
 import { Coordinate } from "../commons/interfaces";
 import MaxHeap from "../commons/maxHeap";
 import { enemyInRange } from "../commons/utils";
@@ -23,7 +24,7 @@ export interface ITower {
 export class Tower implements ITower {
     protected id: number;
     protected coords: Coordinate;
-    protected range: number = 60;
+    protected range: number = 30;
     protected damage: number = 1;
     protected firingSpeed: number = 1000;
 
@@ -40,7 +41,7 @@ export class Tower implements ITower {
 
         window.addEventListener("enemyMoved", event => {
             const enemy: Enemy = event.detail.enemy
-            
+            console.log("ENEMY MOVED", enemy.id, enemyWithinRange(this, enemy))
             if(enemyWithinRange(this, enemy)) {
                 this.enemies.insertOrUpdate(enemy.id, enemy.distanceTraveled)
 
@@ -124,9 +125,10 @@ export class Tower implements ITower {
 }
 
 function enemyWithinRange(tower: Tower, enemy: Enemy) {    
-    const position =  enemy.getPosition()
-
-    if (!position) return false
-    
-    return enemyInRange(tower, 50, enemy.getPosition(), enemy.size);
+    const bounding_position: DOMRect = enemy.element.getBoundingClientRect()
+    console.log(bounding_position)
+    return enemyInRange(tower, CELL_SIZE, {
+        col: bounding_position.y,
+        row: bounding_position.x
+    }, enemy.size, bounding_position);
 }
