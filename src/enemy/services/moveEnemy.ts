@@ -31,8 +31,11 @@ export class MoveEnemy {
 
   public handle(): void {
     this.spawnEnemy()
-
+    
     this.movement = setInterval(() => {
+      if (window.pause_movement) {
+        return
+      }
       this.enemy.move();
       
       if (this.noMovesLeft()) {

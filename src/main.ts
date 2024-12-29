@@ -13,3 +13,15 @@ grid.setPath(paths);
 renderGrid(grid.grid());
 
 paths.start()
+
+
+window.pause_movement = true;
+window.make_one_move = (() => {
+    setTimeout(() => {
+    window.pause_movement = false;
+
+    setTimeout(() => {
+        window.pause_movement = true;
+    }, 1500); // Set back to false after 1 second
+    }, 0); // Set to true immediately
+})
