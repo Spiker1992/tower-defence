@@ -15,7 +15,7 @@ renderGrid(grid.grid());
 paths.start()
 
 
-window.pause_movement = true;
+window.pause_movement = false;
 window.make_one_move = (() => {
     setTimeout(() => {
     window.pause_movement = false;

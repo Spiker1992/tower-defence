@@ -8,6 +8,7 @@ export class Enemy {
     public element: HTMLDivElement
     public id: number
     public life: number = 2
+    public base_life: number = 2
 
     constructor(path: { col: number; row: number }[], id: number) {
         this.path = path;
@@ -16,8 +17,19 @@ export class Enemy {
         this.id = id
     }
 
+    public updateHealthBar(): void {
+        const healthBar = this.element.querySelector(".healthBar")
+        const healthBarFill = healthBar.querySelector("::after")
+        console.log("VLAD", healthBar)
+        const remainingLife = this.life / this.base_life * 100
+        console.log("VLAD", remainingLife, this.life, this.base_life)
+        healthBar.style.setProperty('--health-percentage', `${remainingLife}%`)
+    }
+
     public reduceLife(damage: number): void  {
         this.life -= damage
+
+        this.updateHealthBar()
 
         if (this.life <= 0) {
             this.remove()

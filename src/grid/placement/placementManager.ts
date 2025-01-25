@@ -1,10 +1,14 @@
 import { Coordinate } from "../../commons/interfaces";
 
-export class PlacementManager {
-    protected data: Coordinate[] = []
+interface IType {
+    type: string    
+}
 
-    public add(row: number, col: number): void {
-        this.data.push({ row: row, col: col })
+export class PlacementManager {
+    protected data: (Coordinate & IType)[] = []
+
+    public add(row: number, col: number, type: string): void {
+        this.data.push({ row: row, col: col, type: type })
     }
 
     public has(col: number, row: number): boolean {
@@ -19,7 +23,7 @@ export class PlacementManager {
         })
     }
 
-    public all(): Coordinate[] {
+    public all(): (Coordinate & IType)[] {
         return this.data
     }
 }
