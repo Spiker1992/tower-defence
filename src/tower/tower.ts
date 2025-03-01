@@ -41,7 +41,7 @@ export class Tower implements ITower {
 
         window.addEventListener("enemyMoved", event => {
             const enemy: Enemy = event.detail.enemy
-            console.log("ENEMY MOVED", enemy.id, enemyWithinRange(this, enemy))
+            
             if(enemyWithinRange(this, enemy)) {
                 this.enemies.insertOrUpdate(enemy.id, enemy.distanceTraveled)
 
@@ -93,7 +93,7 @@ export class Tower implements ITower {
 
         enemy.reduceLife(this.damage)
         this.reload()
-        console.log(`ID ${enemy.id} - remaining life ${enemy.life}`)
+        
         return true
     }
 
@@ -126,7 +126,7 @@ export class Tower implements ITower {
 
 function enemyWithinRange(tower: Tower, enemy: Enemy) {    
     const bounding_position: DOMRect = enemy.element.getBoundingClientRect()
-    console.log(bounding_position)
+    
     return enemyInRange(tower, CELL_SIZE, {
         col: bounding_position.y,
         row: bounding_position.x
