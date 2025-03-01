@@ -89,7 +89,7 @@ export function enemyInRange(tower: Tower, square_size: number = CELL_SIZE, enem
     row: boundary_box.bottom,
     col: boundary_box.right
   }]
-  console.log(isRectangleWithinRange(circle, rectangle), circle, "ENEMY",  enemy.row, enemy.col, rectangle[0], rectangle[1])
+  
   return isRectangleWithinRange(circle, rectangle)
 
   return checkOverlap(tower_range, tower_centre.col, tower_centre.row, enemy_coords[0].col, enemy_coords[0].row, enemy_coords[1].col, enemy_coords[1].row)
@@ -114,10 +114,7 @@ function isRectangleWithinRange(circle, rectangle) {
     );
 
     const distance = Math.sqrt((closestPoint.x - cx) ** 2 + (closestPoint.y - cy) ** 2);
-    console.log(distance, r, side["start"]["row"],
-      side["start"]["col"],
-      side["end"]["row"],
-      side["end"]["col"])
+
     if (distance <= r) {
       return true; // A side is partially within the circle
     }
