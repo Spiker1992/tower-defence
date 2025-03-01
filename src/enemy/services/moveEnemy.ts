@@ -19,11 +19,17 @@ export class MoveEnemy {
 
     const enemy = document.createElement("div");
     enemy.className = "enemy";
-    enemy.style.width = `${this.enemySize}px`
-    enemy.style.height = `${this.enemySize}px`
-    enemy.style.background = "red"
+    // enemy.style.width = `${this.enemySize}px`
+    // enemy.style.height = `${this.enemySize}px`
+    // enemy.style.background = "red"
     enemy.style.top = `-${this.enemySize}px` // `${0-2.5}` /* Calculate the top position based on the grid cell */;
     enemy.style.left = `${y}px`  // `${y-2.5}` /* Calculate the left position based on the grid cell */;
+
+    const healthBar = document.createElement("div");
+    healthBar.className = "healthBar";
+    
+    enemy.appendChild(healthBar);
+
     document.getElementById("grid").appendChild(enemy);
     this.enemyElement = enemy;
     this.enemy.setDomElement(enemy)

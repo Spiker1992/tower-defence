@@ -29,9 +29,9 @@ export class Tower implements ITower {
     protected firingSpeed: number = 1000;
 
     // view related settings
-    protected towerSize: number = 20
+    protected towerSize: number = 30
     protected element: HTMLDivElement
-    protected canShoot: boolean = false
+    protected canShoot: boolean = true
 
     public enemies = new MaxHeap()
 
@@ -44,7 +44,6 @@ export class Tower implements ITower {
             
             if(enemyWithinRange(this, enemy)) {
                 this.enemies.insertOrUpdate(enemy.id, enemy.distanceTraveled)
-
                 this.enemies_updated()
             } else if (this.enemies.hasEnemy(enemy.id)) {
                 this.enemies.deleteEnemy(enemy.id)
@@ -64,7 +63,7 @@ export class Tower implements ITower {
     protected enemies_updated() {
         const enemy_id = this.enemies.peek()[0]
         const enemy = Enemies.getInstance().hash_map[enemy_id]
-
+        
         this.attack(enemy)
     }
     
@@ -126,7 +125,7 @@ export class Tower implements ITower {
 
 function enemyWithinRange(tower: Tower, enemy: Enemy) {    
     const bounding_position: DOMRect = enemy.element.getBoundingClientRect()
-    
+
     return enemyInRange(tower, CELL_SIZE, {
         col: bounding_position.y,
         row: bounding_position.x

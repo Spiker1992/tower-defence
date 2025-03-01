@@ -26,9 +26,9 @@ export class Grid {
         this.baseGrid = generateGrid(numCols, numRows)
     }
 
-    protected placeMarkers(grid: string[][], coords: Coordinate[], marker: string): void {
+    protected placeMarkers(grid: string[][], coords: (Coordinate & { type: string })[], marker: string): void {
         coords.forEach(function (coord) {
-            grid[coord.row][coord.col] = marker
+            grid[coord.row][coord.col] = coord.type
         });
     }
 
