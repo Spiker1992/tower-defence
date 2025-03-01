@@ -14,7 +14,7 @@ export default function renderTower(tower: Tower): void {
     towerElement.id = `tower${tower.getId()}`
     towerElement.style.top = `${y - correction}px`
     towerElement.style.left = `${x - correction}px`
-    towerElement.style.outlineOffset = `${tower.getRange() - correction}px`;
+    towerElement.style.outlineOffset = `${tower.getRange() + tower.getSize() - 4}px`;
 
     document.getElementById("grid").appendChild(towerElement);
 

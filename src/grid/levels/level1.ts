@@ -6,7 +6,7 @@ import { PathPlacement } from "../placement/pathPlacement";
 export class Level1 extends PathPlacement { 
     protected enemySpec: [typeof Enemy, number][] = [
         [TinyEnemy, 1],
-        [BeastEnemy, 2],
+        // [BeastEnemy, 2],
     ];
 
     protected setupEnemyPath(): void {

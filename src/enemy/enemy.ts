@@ -5,7 +5,7 @@ export class Enemy {
     public speed: number = 1000
     public distanceTraveled: number = 0
     public size: number = 20
-    public element: Element
+    public element: HTMLDivElement
     public id: number
     public life: number = 2
 
@@ -78,7 +78,7 @@ export class Enemy {
         return this.currentPosition;
     }
     
-    public setDomElement(element: Element): void {
+    public setDomElement(element: HTMLDivElement): void {
         this.element = element
 
         window.dispatchEvent(new CustomEvent("enemySpawned", { detail: this}))
