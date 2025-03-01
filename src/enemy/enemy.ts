@@ -20,9 +20,9 @@ export class Enemy {
     public updateHealthBar(): void {
         const healthBar = this.element.querySelector(".healthBar")
         const healthBarFill = healthBar.querySelector("::after")
-        console.log("VLAD", healthBar)
+        
         const remainingLife = this.life / this.base_life * 100
-        console.log("VLAD", remainingLife, this.life, this.base_life)
+        
         healthBar.style.setProperty('--health-percentage', `${remainingLife}%`)
     }
 
