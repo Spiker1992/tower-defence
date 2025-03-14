@@ -4,14 +4,6 @@ import { IPosition, ENEMY_PATH } from '../../models/position';
 import { EnemyMovedEvent } from '../events/enemy_moved_event';
 import { EnemyDiedEvent } from '../events/enemy_died_event';
 
-// Mock EventStore to avoid side effects in tests
-jest.mock('../../commons/event_store', () => ({
-  EventStore: {
-    save: jest.fn(),
-    getEventsByType: jest.fn().mockReturnValue([]),
-  },
-}));
-
 describe('moveEnemyCommand', () => {
   let enemy: Enemy;
 
@@ -26,7 +18,7 @@ describe('moveEnemyCommand', () => {
     expect(() => moveEnemyCommand(enemy)).toThrow('Dead enemies cant move');
   });
 
-  it('make first move', () => {
+  it('make initial move', () => {
     moveEnemyCommand(enemy);
 
     expect(enemy.events.length).toBe(1);
@@ -37,7 +29,7 @@ describe('moveEnemyCommand', () => {
   });
 
 
-  it('make second move', () => {
+  it('make a move', () => {
     enemy.applyEvent(new EnemyMovedEvent(
       {
         col: 100,
@@ -53,6 +45,20 @@ describe('moveEnemyCommand', () => {
       row: 2
     });
   });
+
+  it('makes a last move', () => {
+    const lastPosition: IPosition = ENEMY_PATH[ENEMY_PATH.length - 1];
+    enemy.applyEvent(new EnemyMovedEvent({
+        col: lastPosition.col * 100,
+        row: lastPosition.row * 100 - 1
+      }));
+
+      moveEnemyCommand(enemy);
+      expect(enemy.events[1].position).toEqual({
+        col: lastPosition.col * 100,
+        row: lastPosition.row * 100
+      });
+    })
 
   it('Enemy reached last position', () => {
     const lastPosition: IPosition = ENEMY_PATH[ENEMY_PATH.length - 1];
