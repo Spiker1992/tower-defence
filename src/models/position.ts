@@ -3,6 +3,8 @@ export interface IPosition {
   row: number;
 }
 
+export const GRID_SCALE = 100
+
 export const ENEMY_PATH: IPosition[] = [
   { col: 1, row: 0 },
   { col: 1, row: 1 },
