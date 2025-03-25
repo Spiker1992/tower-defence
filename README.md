@@ -22,3 +22,9 @@ At this initial stage, I would focus on the mechanics of the game, listed above.
 # Introduction
 
 In this REPO I am recreating the game in an Event Sourced way. I started working with an enemy behaviour and everything enemy related can be found within the `/src/enemy` folder. 
+
+## TODO
+
+- what if we have multiple enemies: how would move command work? how would that impact data store?
+- what if some enemies are slower than others?
+- what if we could slow an enemy down for a short period of time?
