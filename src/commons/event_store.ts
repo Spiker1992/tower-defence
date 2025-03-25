@@ -5,6 +5,8 @@ export class EventStore {
 
   static save(event: IEvent): void {
     this.events.push(event);
+
+    window.dispatchEvent(new CustomEvent(event.type, { detail: event }))
   }
 
   static getHistory(): IEvent[] {
