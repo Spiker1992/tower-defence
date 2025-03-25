@@ -76,7 +76,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \*********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _enemy_commands_move_enemy_on_path_command__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./enemy/commands/move_enemy_on_path_command */ \"./src/enemy/commands/move_enemy_on_path_command.ts\");\n/* harmony import */ var _enemy_models_enemy__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./enemy/models/enemy */ \"./src/enemy/models/enemy.ts\");\n\n\nconst enemy = new _enemy_models_enemy__WEBPACK_IMPORTED_MODULE_1__.Enemy();\n(0,_enemy_commands_move_enemy_on_path_command__WEBPACK_IMPORTED_MODULE_0__.move_enemy_on_path)(enemy);\nwindow.addEventListener(\"EnemyMoved\", (event) => {\n    console.log(event.details);\n});\n\n\n//# sourceURL=webpack:///./src/main.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _enemy_commands_move_enemy_on_path_command__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./enemy/commands/move_enemy_on_path_command */ \"./src/enemy/commands/move_enemy_on_path_command.ts\");\n/* harmony import */ var _enemy_models_enemy__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./enemy/models/enemy */ \"./src/enemy/models/enemy.ts\");\n\n\nconst enemy = new _enemy_models_enemy__WEBPACK_IMPORTED_MODULE_1__.Enemy();\n(0,_enemy_commands_move_enemy_on_path_command__WEBPACK_IMPORTED_MODULE_0__.move_enemy_on_path)(enemy);\nwindow.addEventListener(\"EnemyMoved\", (event) => {\n    console.log(event.detail);\n});\n\n\n//# sourceURL=webpack:///./src/main.ts?");
 
 /***/ }),
 
