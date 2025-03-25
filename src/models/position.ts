@@ -3,6 +3,7 @@ export interface IPosition {
   row: number;
 }
 
+// setting for the map
 export const GRID_SCALE = 100
 
 export const ENEMY_PATH: IPosition[] = [
