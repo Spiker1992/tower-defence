@@ -5,6 +5,6 @@ import { Enemy } from "./enemy/models/enemy"
 const enemy = new Enemy();
 move_enemy_on_path(enemy);
 
-window.addEventListener("EnemyMoved", (event) => {
-    console.log(event.details)
+window.addEventListener("EnemyMoved", (event: CustomEvent) => {
+    console.log(event.detail)
 })
