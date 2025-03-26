@@ -14,7 +14,7 @@ export function moveEnemyCommand(enemy: Enemy): void {
   const next_position = nextPosition(enemy);
 
 
-  const event = new EnemyMovedEvent(next_position);
+  const event = new EnemyMovedEvent(next_position, enemy.uuid);
   enemy.persist(event);
 }
 
