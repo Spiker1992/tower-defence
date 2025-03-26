@@ -1,4 +1,4 @@
-import { move_enemy_on_path } from './move_enemy_on_path_command';
+import { moveEnemyOnPath } from './moveEnemyOnPath_command';
 import { Enemy } from '../models/enemy';
 
 describe('MoveEnemyOnPathCommand', () => {
@@ -8,7 +8,7 @@ describe('MoveEnemyOnPathCommand', () => {
 
   it('enemy should make 400 steps, at 1 step per ms, when we have 5 entries in the PATH', () => {
     const enemy = new Enemy();
-    move_enemy_on_path(enemy);
+    moveEnemyOnPath(enemy);
 
     jest.advanceTimersByTime(5000);
 
