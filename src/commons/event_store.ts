@@ -16,4 +16,8 @@ export class EventStore {
   static getEventsByType(type: string): IEvent[] {
     return this.events.filter(event => event.type === type);
   }
+
+  static clearHistory(): void {
+    this.events = [];
+  }
 }
