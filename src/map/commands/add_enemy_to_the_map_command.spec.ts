@@ -15,7 +15,6 @@ describe('AddEnemyToTheMapCommand', () => {
         const enemy = new Enemy();
 
         AddEnemyToTheMapCommand(enemy)
-        
         expect(Enemies.getHistory().length).toBe(1);
     });
 

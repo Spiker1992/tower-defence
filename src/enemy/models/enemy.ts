@@ -2,15 +2,18 @@ import { IPosition, ENEMY_PATH, GRID_SCALE } from '../../models/position';
 import { EventStore } from '../../commons/event_store';
 import { EnemyMovedEvent } from '../events/enemy_moved_event';
 import { EnemyDiedEvent } from '../events/enemy_died_event';
+import { v4 as uuidv4 } from 'uuid';
 
 export class Enemy {
   events: EnemyMovedEvent[] = [];
   speed: number;
+  uuid: string;
 
   constructor(events: EnemyMovedEvent[] = [], speed: number = 1) {
     this.events = [];
     this.speed = speed;
     this.loadFromHistory(events);
+    this.uuid = uuidv4();
   }
 
   persist(event: EnemyMovedEvent): void {
