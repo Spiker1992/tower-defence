@@ -1,10 +1,9 @@
-import { moveEnemyOnPath } from "./enemy/commands/move_enemy_on_path_command"
 import { Enemy } from "./enemy/models/enemy"
+import { AddEnemyToTheMapCommand } from "./map/commands/add_enemy_to_the_map_command";
 
 
-const enemy = new Enemy();
-moveEnemyOnPath(enemy);
 
-window.addEventListener("EnemyMoved", (event: CustomEvent) => {
-    console.log(event.detail)
-})
+
+
+AddEnemyToTheMapCommand(new Enemy())
+AddEnemyToTheMapCommand(new Enemy())
