@@ -20,6 +20,26 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
+/***/ "./src/enemy/commands/move_enemy_command.ts":
+/*!**************************************************!*\
+  !*** ./src/enemy/commands/move_enemy_command.ts ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   moveEnemyCommand: () => (/* binding */ moveEnemyCommand)\n/* harmony export */ });\n/* harmony import */ var _models_position__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../models/position */ \"./src/models/position.ts\");\n/* harmony import */ var _events_enemy_moved_event__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../events/enemy_moved_event */ \"./src/enemy/events/enemy_moved_event.ts\");\n\n\nfunction moveEnemyCommand(enemy) {\n    if (enemy.is_dead) {\n        throw new Error('Dead enemies cant move');\n    }\n    if (isLastPosition(enemy.current_position, lastMove())) {\n        throw new Error('Last position reached');\n    }\n    const next_position = nextPosition(enemy);\n    const event = new _events_enemy_moved_event__WEBPACK_IMPORTED_MODULE_1__.EnemyMovedEvent(next_position);\n    enemy.persist(event);\n}\nfunction isLastPosition(current_position, last_position) {\n    return current_position.col === last_position.col && current_position.row === last_position.row;\n}\nfunction lastMove() {\n    const last_position = _models_position__WEBPACK_IMPORTED_MODULE_0__.ENEMY_PATH[_models_position__WEBPACK_IMPORTED_MODULE_0__.ENEMY_PATH.length - 1];\n    return {\n        col: last_position.col * _models_position__WEBPACK_IMPORTED_MODULE_0__.GRID_SCALE,\n        row: last_position.row * _models_position__WEBPACK_IMPORTED_MODULE_0__.GRID_SCALE,\n    };\n}\nfunction nextPosition(enemy) {\n    const nextPath = enemy.next_path;\n    const currentPos = enemy.current_position;\n    const colDiff = (nextPath.col * _models_position__WEBPACK_IMPORTED_MODULE_0__.GRID_SCALE) - currentPos.col;\n    const rowDiff = (nextPath.row * _models_position__WEBPACK_IMPORTED_MODULE_0__.GRID_SCALE) - currentPos.row;\n    const col = currentPos.col + (colDiff !== 0 ? enemy.speed : 0);\n    const row = currentPos.row + (rowDiff !== 0 ? enemy.speed : 0);\n    return { col, row };\n}\n\n\n//# sourceURL=webpack:///./src/enemy/commands/move_enemy_command.ts?");
+
+/***/ }),
+
+/***/ "./src/enemy/commands/move_enemy_on_path_command.ts":
+/*!**********************************************************!*\
+  !*** ./src/enemy/commands/move_enemy_on_path_command.ts ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   moveEnemyOnPath: () => (/* binding */ moveEnemyOnPath)\n/* harmony export */ });\n/* harmony import */ var _commands_move_enemy_command__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../commands/move_enemy_command */ \"./src/enemy/commands/move_enemy_command.ts\");\n\nfunction moveEnemyOnPath(enemy) {\n    const steps = 100;\n    const interval = 1000 / steps; // 10ms per step\n    const movement = setInterval(() => {\n        try {\n            (0,_commands_move_enemy_command__WEBPACK_IMPORTED_MODULE_0__.moveEnemyCommand)(enemy);\n        }\n        catch (e) {\n            clearInterval(movement);\n        }\n    }, interval);\n}\n\n\n//# sourceURL=webpack:///./src/enemy/commands/move_enemy_on_path_command.ts?");
+
+/***/ }),
+
 /***/ "./src/enemy/events/enemy_died_event.ts":
 /*!**********************************************!*\
   !*** ./src/enemy/events/enemy_died_event.ts ***!
@@ -27,6 +47,16 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   EnemyDiedEvent: () => (/* binding */ EnemyDiedEvent)\n/* harmony export */ });\nclass EnemyDiedEvent {\n    constructor() {\n        this.type = \"EnemyDied\";\n    }\n}\n\n\n//# sourceURL=webpack:///./src/enemy/events/enemy_died_event.ts?");
+
+/***/ }),
+
+/***/ "./src/enemy/events/enemy_moved_event.ts":
+/*!***********************************************!*\
+  !*** ./src/enemy/events/enemy_moved_event.ts ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   EnemyMovedEvent: () => (/* binding */ EnemyMovedEvent)\n/* harmony export */ });\nclass EnemyMovedEvent {\n    constructor(position) {\n        this.type = \"EnemyMoved\";\n        this.position = position;\n    }\n}\n\n\n//# sourceURL=webpack:///./src/enemy/events/enemy_moved_event.ts?");
 
 /***/ }),
 
@@ -46,7 +76,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \*********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _enemy_models_enemy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./enemy/models/enemy */ \"./src/enemy/models/enemy.ts\");\n/* harmony import */ var _map_commands_add_enemy_to_the_map_command__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./map/commands/add_enemy_to_the_map_command */ \"./src/map/commands/add_enemy_to_the_map_command.ts\");\n\n\n(0,_map_commands_add_enemy_to_the_map_command__WEBPACK_IMPORTED_MODULE_1__.AddEnemyToTheMapCommand)(new _enemy_models_enemy__WEBPACK_IMPORTED_MODULE_0__.Enemy());\n(0,_map_commands_add_enemy_to_the_map_command__WEBPACK_IMPORTED_MODULE_1__.AddEnemyToTheMapCommand)(new _enemy_models_enemy__WEBPACK_IMPORTED_MODULE_0__.Enemy());\n\n\n//# sourceURL=webpack:///./src/main.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _enemy_models_enemy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./enemy/models/enemy */ \"./src/enemy/models/enemy.ts\");\n/* harmony import */ var _map_commands_add_enemy_to_the_map_command__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./map/commands/add_enemy_to_the_map_command */ \"./src/map/commands/add_enemy_to_the_map_command.ts\");\n/* harmony import */ var _map_listeners__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./map/listeners */ \"./src/map/listeners.ts\");\n\n\n\n(0,_map_commands_add_enemy_to_the_map_command__WEBPACK_IMPORTED_MODULE_1__.AddEnemyToTheMapCommand)(new _enemy_models_enemy__WEBPACK_IMPORTED_MODULE_0__.Enemy());\n(0,_map_commands_add_enemy_to_the_map_command__WEBPACK_IMPORTED_MODULE_1__.AddEnemyToTheMapCommand)(new _enemy_models_enemy__WEBPACK_IMPORTED_MODULE_0__.Enemy());\n\n\n//# sourceURL=webpack:///./src/main.ts?");
 
 /***/ }),
 
@@ -77,6 +107,16 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   EnemyAddedToTheMapEvent: () => (/* binding */ EnemyAddedToTheMapEvent)\n/* harmony export */ });\nclass EnemyAddedToTheMapEvent {\n    constructor(enemy) {\n        this.enemy = enemy;\n        this.type = \"EnemyAddedToTheMap\";\n    }\n    ;\n}\n\n\n//# sourceURL=webpack:///./src/map/events/enemy_added_to_the_map_event.ts?");
+
+/***/ }),
+
+/***/ "./src/map/listeners.ts":
+/*!******************************!*\
+  !*** ./src/map/listeners.ts ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _enemy_commands_move_enemy_on_path_command__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../enemy/commands/move_enemy_on_path_command */ \"./src/enemy/commands/move_enemy_on_path_command.ts\");\n\nwindow.addEventListener(\"EnemyAddedToTheMap\", (event) => {\n    const enemy = event.detail.enemy;\n    (0,_enemy_commands_move_enemy_on_path_command__WEBPACK_IMPORTED_MODULE_0__.moveEnemyOnPath)(enemy);\n});\nwindow.addEventListener(\"EnemyMoved\", (event) => {\n    console.log(event.detail);\n});\n\n\n//# sourceURL=webpack:///./src/map/listeners.ts?");
 
 /***/ }),
 
