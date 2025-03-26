@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { moveEnemyCommand } from './move_enemy_command';
 import { Enemy } from '../models/enemy';
 import { IPosition, ENEMY_PATH } from '../../models/position';
