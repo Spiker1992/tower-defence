@@ -25,6 +25,8 @@ In this REPO I am recreating the game in an Event Sourced way. I started working
 
 ## TODO
 
-- what if we have multiple enemies: how would move command work? how would that impact data store?
-- what if some enemies are slower than others?
+- what if we have multiple enemies: 
+    - how would move command work? 
+    - how would that impact data store / events?
+- what if some enemies are slower/faster than others?
 - what if we could slow an enemy down for a short period of time?
