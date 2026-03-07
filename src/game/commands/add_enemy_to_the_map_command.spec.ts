@@ -2,8 +2,8 @@
  * @jest-environment jsdom
  */
 
-import { AddEnemyToTheMapCommand } from './add_enemy_to_the_map_command'; // Adjust the import path as needed
-import { Enemies } from '../event_store'; // Assuming you have a Map interface/class
+import { AddEnemyToTheMapCommand } from './add_enemy_to_the_map_command';
+import { Enemies } from '../event_store';
 import { Enemy } from '../../enemy/models/enemy';
 
 describe('AddEnemyToTheMapCommand', () => {
