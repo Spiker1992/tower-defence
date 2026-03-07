@@ -4,19 +4,31 @@
 
 import { moveEnemyOnPath } from './move_enemy_on_path_command';
 import { Enemy } from '../models/enemy';
+import { EventStore } from '../../commons/event_store';
+import { EnemyReachedEndEvent } from '../events/enemy_reached_end_event';
+import { ENEMY_PATH } from '../../models/position';
 
 describe('MoveEnemyOnPathCommand', () => {
   beforeEach(() => {
     jest.useFakeTimers();
+    EventStore.clearHistory();
   });
 
-  it('enemy should make 400 steps, at 1 step per ms, when we have 5 entries in the PATH', () => {
+  it('enemy should emit EnemyReachedEndEvent when path is complete', () => {
     const enemy = new Enemy();
     moveEnemyOnPath(enemy);
 
-    jest.advanceTimersByTime(5000);
+    const totalSteps = (ENEMY_PATH.length - 1) * 100 + 1;
+    for (let i = 0; i < totalSteps; i++) {
+      jest.advanceTimersByTime(10);
+    }
 
-    expect(enemy.events.length).toEqual(100 * 4)
+    const allEvents = EventStore.getHistory();
+    const reachedEndEvents = EventStore.getEventsByType('EnemyReachedEnd');
+    
+    expect(allEvents.length).toBeGreaterThan(0);
+    expect(reachedEndEvents.length).toBe(1);
+    expect((reachedEndEvents[0] as EnemyReachedEndEvent).enemy_uuid).toBe(enemy.uuid);
   });
 
 });

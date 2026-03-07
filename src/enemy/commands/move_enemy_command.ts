@@ -1,37 +1,28 @@
 import { Enemy } from '../models/enemy';
-import { ENEMY_PATH, GRID_SCALE, IPosition } from '../../models/position';
+import { GRID_SCALE, IPosition } from '../../models/position';
 import { EnemyMovedEvent } from '../events/enemy_moved_event';
+import { EnemyReachedEndEvent } from '../events/enemy_reached_end_event';
+import { EventStore } from '../../commons/event_store';
 
 export function moveEnemyCommand(enemy: Enemy): void {
   if (enemy.is_dead) {
     throw new Error('Dead enemies cant move');
   }
 
-  if (isLastPosition(enemy.current_position, lastMove())) {
-    throw new Error('Last position reached');
-  }
 
   const next_position = nextPosition(enemy);
 
-
   const event = new EnemyMovedEvent(next_position, enemy.uuid);
   enemy.persist(event);
-}
 
-function isLastPosition(current_position: IPosition, last_position: IPosition): boolean {
-  return current_position.col === last_position.col && current_position.row === last_position.row;
-}
-
-function lastMove(): IPosition {
-  const last_position = ENEMY_PATH[ENEMY_PATH.length - 1];
-  return {
-    col: last_position.col * GRID_SCALE,
-    row: last_position.row * GRID_SCALE,
+  if (enemy.next_path === undefined) {
+    const endEvent = new EnemyReachedEndEvent(enemy.uuid);
+    EventStore.save(endEvent);
   }
 }
 
 function nextPosition(enemy: Enemy): IPosition {
-  const nextPath = enemy.next_path
+  const nextPath = enemy.next_path;
   const currentPos = enemy.current_position;
 
   const colDiff = (nextPath.col * GRID_SCALE) - currentPos.col;
