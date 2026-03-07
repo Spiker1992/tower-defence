@@ -151,3 +151,94 @@ td {
   background: url('./imgs/FieldsTile_38.png');
   outline: 1px solid rgb(137 165 75 / 30%);
 }
+
+/* Debug Panel */
+#debug-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 280px;
+  height: 100vh;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  overflow-y: auto;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 12px;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+#debug-panel h3 {
+  margin: 0 0 10px 0;
+  color: #4fc1ff;
+  border-bottom: 1px solid #333;
+  padding-bottom: 5px;
+}
+
+#debug-panel p {
+  margin: 0 0 10px 0;
+  color: #888;
+  font-size: 11px;
+}
+
+.debug-enemy {
+  background: #2d2d2d;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  padding: 8px;
+}
+
+.debug-enemy-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.debug-enemy-header:hover {
+  background: #3d3d3d;
+  margin: -4px -8px 4px -8px;
+  padding: 4px 8px;
+  border-radius: 4px 4px 0 0;
+}
+
+.debug-toggle {
+  color: #6a9955;
+  margin-right: 6px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.debug-enemy-uuid {
+  color: #ce9178;
+  font-weight: bold;
+}
+
+.debug-event-count {
+  color: #6a9955;
+}
+
+.debug-enemy-latest {
+  color: #dcdcaa;
+  font-size: 11px;
+}
+
+.debug-enemy-history {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #444;
+}
+
+.debug-event {
+  color: #808080;
+  padding: 2px 0;
+  padding-left: 10px;
+  border-left: 2px solid #444;
+}
+
+.debug-event.latest {
+  color: #dcdcaa;
+  border-left-color: #4fc1ff;
+}

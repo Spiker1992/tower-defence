@@ -1,8 +1,10 @@
 import { IEvent } from '../../commons/events';
-import { Enemy } from '../../enemy/models/enemy';
 
 export class EnemyAddedToTheMapEvent implements IEvent {
   type: string = "EnemyAddedToTheMap";
+  enemy_uuid: string;
 
-  constructor(public enemy: Enemy){};
+  constructor(enemy_uuid: string) {
+    this.enemy_uuid = enemy_uuid;
+  }
 }
