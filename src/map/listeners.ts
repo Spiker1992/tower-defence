@@ -6,6 +6,7 @@ window.addEventListener("EnemyAddedToTheMap", (event: CustomEvent) => {
     moveEnemyOnPath(enemy)
 })
 
-window.addEventListener("EnemyMoved", (event: CustomEvent) => {
-    console.log(event.detail)
+window.addEventListener("Event", (event: CustomEvent) => {
+    const e = event.detail;
+    console.log(`Event: ${e.type}`, e);
 })
