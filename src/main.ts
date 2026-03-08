@@ -11,4 +11,4 @@ validation.warnings.forEach(w => console.warn(`Path warning: ${w}`));
 
 initDebugPanel();
 
-AddEnemyToTheMapCommand(uuidv4(), { health: 100 })
+AddEnemyToTheMapCommand(uuidv4(), { health: 100, speed: 1 })

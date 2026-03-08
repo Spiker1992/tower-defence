@@ -15,7 +15,7 @@ describe('AddEnemyToTheMapCommand', () => {
 
     test('should add an enemy to an empty map and update the enemy store', () => {
         const enemy = new Enemy();
-        const description: EnemyDescription = { health: 100 };
+        const description: EnemyDescription = { health: 100, speed: 1 };
 
         AddEnemyToTheMapCommand(enemy.uuid, description)
         expect(Enemies.getHistory().length).toBe(1);
@@ -24,7 +24,7 @@ describe('AddEnemyToTheMapCommand', () => {
 
     test('should add an enemy to a map with existing enemies and update the enemy store', () => {
         const enemy = new Enemy();
-        const description: EnemyDescription = { health: 100 };
+        const description: EnemyDescription = { health: 100, speed: 1 };
 
         AddEnemyToTheMapCommand(enemy.uuid, description)
         AddEnemyToTheMapCommand(enemy.uuid, description)
