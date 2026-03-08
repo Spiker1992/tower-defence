@@ -112,12 +112,14 @@ export function renderDebugPanel(): void {
     for (const enemy of enemyGroups) {
         const isExpanded = expandedEnemies.has(enemy.uuid);
         const latestEvent = enemy.latestEvent;
+        const enemyInstance = new Enemy(enemy.events, 1, enemy.uuid);
         
         html += `<div class="debug-enemy">`;
         html += `  <div class="debug-enemy-header" onclick="window.toggleEnemyDebug('${enemy.uuid}')">`;
         html += `    <span class="debug-toggle">${isExpanded ? '[-]' : '[+]'}</span>`;
         html += `    <span class="debug-enemy-uuid">${truncateUuid(enemy.uuid)}</span>`;
         html += `    <span class="debug-event-count">(${enemy.events.length})</span>`;
+        html += `    <span class="debug-health">HP: ${enemyInstance.health}</span>`;
         html += `    <button onclick="window.damageEnemyDebug('${enemy.uuid}'); event.stopPropagation();">Damage</button>`;
         html += `  </div>`;
         html += `  <div class="debug-enemy-latest">`;
