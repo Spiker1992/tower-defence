@@ -38,6 +38,8 @@ export function validatePath(path: IPosition[]): { valid: boolean; warnings: str
 
 // setting for the map
 export const GRID_SCALE = 100
+export const MAP_WIDTH = 10
+export const MAP_HEIGHT = 10
 
 export const ENEMY_PATH: IPosition[] = [
   { col: 1, row: 0 },
