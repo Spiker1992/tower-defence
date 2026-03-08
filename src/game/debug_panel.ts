@@ -1,0 +1,128 @@
+import { EventStore } from "../commons/event_store";
+
+const REFRESH_INTERVAL_MS = 1000;
+const MAX_ENEMIES_DISPLAYED = 100;
+
+interface EnemyEvents {
+    uuid: string;
+    events: any[];
+    latestEvent: any;
+}
+
+const expandedEnemies = new Set<string>();
+
+export function groupEventsByEnemy(events: any[]): EnemyEvents[] {
+    const grouped = new Map<string, EnemyEvents>();
+
+    for (const event of events) {
+        const uuid = event.uuid;
+        if (!uuid) continue;
+
+        if (!grouped.has(uuid)) {
+            grouped.set(uuid, {
+                uuid: uuid,
+                events: [],
+                latestEvent: null
+            });
+        }
+
+        const enemyGroup = grouped.get(uuid)!;
+        enemyGroup.events.push(event);
+        enemyGroup.latestEvent = event;
+    }
+
+    return Array.from(grouped.values())
+        .sort((a, b) => b.events.length - a.events.length)
+        .slice(0, MAX_ENEMIES_DISPLAYED);
+}
+
+export function getEventSummary(event: any): string {
+    switch (event.type) {
+        case 'EnemyAddedToTheMap':
+            return 'EnemyAddedToMap';
+        case 'EnemyMoved':
+            return `Moved to (${event.position.col}, ${event.position.row})`;
+        case 'EnemyReachedEnd':
+            return 'Reached End';
+        case 'EnemyDied':
+            return 'Died';
+        default:
+            return event.type;
+    }
+}
+
+export function truncateUuid(uuid: string): string {
+    if (typeof uuid !== 'string') {
+        // Safely cast to string to avoid runtime crash, fulfilling the substring requirement.
+        return String(uuid).substring(0, 8) + '...';
+    }
+    return uuid.substring(0, 8) + '...';
+}
+
+export function toggleEnemy(enemyUuid: string): void {
+    if (expandedEnemies.has(enemyUuid)) {
+        expandedEnemies.delete(enemyUuid);
+    } else {
+        expandedEnemies.add(enemyUuid);
+    }
+    renderDebugPanel();
+}
+
+export function renderDebugPanel(): void {
+    const panel = document.getElementById('debug-panel');
+    if (!panel) return;
+
+    const events = EventStore.getHistory();
+    const enemyGroups = groupEventsByEnemy(events);
+
+    if (enemyGroups.length === 0) {
+        panel.innerHTML = '<h3>Event Store Debug</h3><p>No events yet</p>';
+        return;
+    }
+
+    let html = '<h3>Event Store Debug</h3>';
+    html += `<p>Total events: ${events.length} | Enemies: ${enemyGroups.length}</p>`;
+
+    for (const enemy of enemyGroups) {
+        const isExpanded = expandedEnemies.has(enemy.uuid);
+        const latestEvent = enemy.latestEvent;
+        
+        html += `<div class="debug-enemy">`;
+        html += `  <div class="debug-enemy-header" onclick="window.toggleEnemyDebug('${enemy.uuid}')">`;
+        html += `    <span class="debug-toggle">${isExpanded ? '[-]' : '[+]'}</span>`;
+        html += `    <span class="debug-enemy-uuid">${truncateUuid(enemy.uuid)}</span>`;
+        html += `    <span class="debug-event-count">(${enemy.events.length})</span>`;
+        html += `  </div>`;
+        html += `  <div class="debug-enemy-latest">`;
+        html += `    Latest: ${getEventSummary(latestEvent)}`;
+        html += `  </div>`;
+        
+        if (isExpanded) {
+            html += `  <div class="debug-enemy-history">`;
+            for (let i = enemy.events.length - 1; i >= 0; i--) {
+                const evt = enemy.events[i];
+                const isLatest = i === enemy.events.length - 1;
+                html += `    <div class="debug-event ${isLatest ? 'latest' : ''}">`;
+                html += `      ${i + 1}. ${getEventSummary(evt)}`;
+                html += `    </div>`;
+            }
+            html += `  </div>`;
+        }
+        
+        html += `</div>`;
+    }
+
+    panel.innerHTML = html;
+}
+
+declare global {
+    interface Window {
+        toggleEnemyDebug: (enemyUuid: string) => void;
+    }
+}
+
+export function initDebugPanel(): void {
+    window.toggleEnemyDebug = toggleEnemy;
+    renderDebugPanel();
+    setInterval(renderDebugPanel, REFRESH_INTERVAL_MS);
+}

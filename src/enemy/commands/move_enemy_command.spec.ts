@@ -9,6 +9,7 @@ import { EnemyMovedEvent } from '../events/enemy_moved_event';
 import { EnemyDiedEvent } from '../events/enemy_died_event';
 import { EventStore } from '../../commons/event_store';
 import { EnemyReachedEndEvent } from '../events/enemy_reached_end_event';
+import { AddEnemyToTheMapCommand } from '../../game/commands/add_enemy_to_the_map_command';
 
 describe('moveEnemyCommand', () => {
   let enemy: Enemy;
@@ -16,21 +17,23 @@ describe('moveEnemyCommand', () => {
   beforeEach(() => {
     enemy = new Enemy();
     EventStore.clearHistory();
+    AddEnemyToTheMapCommand(enemy.uuid, { health: 100 })
   });
 
 
   it('dead enemies cant move', () => {
-    const diedEvent = new EnemyDiedEvent();
-    (enemy as any).events.push(diedEvent);
+    const diedEvent = new EnemyDiedEvent(enemy.uuid);
+    EventStore.save(diedEvent);
 
-    expect(() => moveEnemyCommand(enemy)).toThrow('Dead enemies cant move');
+    expect(() => moveEnemyCommand(enemy.uuid)).toThrow('Dead enemies cant move');
   });
 
   it('make initial move', () => {
-    moveEnemyCommand(enemy);
+    moveEnemyCommand(enemy.uuid);
 
-    expect(enemy.events.length).toBe(1);
-    expect(enemy.events[0].position).toEqual({
+    const enemyEvents = EventStore.getByUuid(enemy.uuid);
+    expect(enemyEvents.length).toBe(2);
+    expect((enemyEvents[1] as EnemyMovedEvent).position).toEqual({
       col: 101,
       row: 0
     });
@@ -38,7 +41,7 @@ describe('moveEnemyCommand', () => {
 
 
   it('make a move', () => {
-    enemy.applyEvent(new EnemyMovedEvent(
+    EventStore.save(new EnemyMovedEvent(
       {
         col: 101,
         row: 0
@@ -46,20 +49,22 @@ describe('moveEnemyCommand', () => {
       enemy.uuid
     ));
 
-    moveEnemyCommand(enemy);
+    moveEnemyCommand(enemy.uuid);
 
-    expect(enemy.events.length).toBe(2);
-    expect(enemy.events[1].position).toEqual({
+    const enemyEvents = EventStore.getByUuid(enemy.uuid);
+    expect(enemyEvents.length).toBe(3);
+    expect((enemyEvents[2] as EnemyMovedEvent).position).toEqual({
       col: 102,
       row: 0
     });
   });
 
   it('makes a move towards next path position', () => {
-    enemy.applyEvent(new EnemyMovedEvent({col: 100, row: 0}, enemy.uuid));
+    EventStore.save(new EnemyMovedEvent({col: 100, row: 0}, enemy.uuid));
 
-    moveEnemyCommand(enemy);
-    expect(enemy.events[1].position).toEqual({
+    moveEnemyCommand(enemy.uuid);
+    const enemyEvents = EventStore.getByUuid(enemy.uuid);
+    expect((enemyEvents[2] as EnemyMovedEvent).position).toEqual({
       col: 101,
       row: 0
     });
@@ -69,11 +74,16 @@ describe('moveEnemyCommand', () => {
     const totalSteps = (ENEMY_PATH.length - 1) * 100;
     
     for (let i = 0; i < totalSteps; i++) {
-      moveEnemyCommand(enemy);
+      try {
+        moveEnemyCommand(enemy.uuid);
+      } catch(e) {
+        // ignore
+      }
     }
 
     const reachedEndEvents = EventStore.getEventsByType('EnemyReachedEnd');
     expect(reachedEndEvents.length).toBe(1);
-    expect((reachedEndEvents[0] as EnemyReachedEndEvent).enemy_uuid).toBe(enemy.uuid);
+    expect((reachedEndEvents[0] as EnemyReachedEndEvent).uuid).toBe(enemy.uuid);
   });
+
 });

@@ -19,7 +19,7 @@ describe('groupEventsByEnemy', () => {
         expect(result).toEqual([]);
     });
 
-    test('should group events by enemy_uuid', () => {
+    test('should group events by uuid', () => {
         const enemy = new Enemy();
         EventStore.save(new EnemyMovedEvent({ col: 100, row: 0 }, enemy.uuid));
         EventStore.save(new EnemyMovedEvent({ col: 200, row: 0 }, enemy.uuid));
@@ -27,7 +27,7 @@ describe('groupEventsByEnemy', () => {
         const result = groupEventsByEnemy(EventStore.getHistory());
 
         expect(result.length).toBe(1);
-        expect(result[0].enemy_uuid).toBe(enemy.uuid);
+        expect(result[0].uuid).toBe(enemy.uuid);
         expect(result[0].events.length).toBe(2);
     });
 
@@ -42,8 +42,8 @@ describe('groupEventsByEnemy', () => {
 
         const result = groupEventsByEnemy(EventStore.getHistory());
 
-        expect(result[0].enemy_uuid).toBe(enemy1.uuid);
-        expect(result[1].enemy_uuid).toBe(enemy2.uuid);
+        expect(result[0].uuid).toBe(enemy1.uuid);
+        expect(result[1].uuid).toBe(enemy2.uuid);
     });
 
     test('should limit to MAX_ENEMIES_DISPLAYED', () => {

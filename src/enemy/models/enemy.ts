@@ -2,35 +2,41 @@ import { IPosition, ENEMY_PATH, GRID_SCALE } from '../../models/position';
 import { EventStore } from '../../commons/event_store';
 import { EnemyMovedEvent } from '../events/enemy_moved_event';
 import { EnemyDiedEvent } from '../events/enemy_died_event';
+import { EnemyAddedToTheMapEvent } from '../../game/events/enemy_added_to_the_map_event';
 import { v4 as uuidv4 } from 'uuid';
+import { IEvent } from '../../commons/events';
 
 export class Enemy {
-  events: EnemyMovedEvent[] = [];
+  events: IEvent[] = [];
   speed: number;
   uuid: string;
+  health: number = 0;
 
-  constructor(events: EnemyMovedEvent[] = [], speed: number = 1) {
+  constructor(events: IEvent[] = [], speed: number = 1, uuid: string = uuidv4()) {
     this.events = [];
     this.speed = speed;
     this.loadFromHistory(events);
-    this.uuid = uuidv4();
+    this.uuid = uuid;
   }
 
-  persist(event: EnemyMovedEvent): void {
+  persist(event: IEvent): void {
     this.applyEvent(event);
     EventStore.save(event);
   }
 
-  applyEvent(event: EnemyMovedEvent): void {
+  applyEvent(event: IEvent): void {
     this.events.push(event);
+    if (event instanceof EnemyAddedToTheMapEvent) {
+      this.health = event.description.health;
+    }
   }
 
-  loadFromHistory(events: EnemyMovedEvent[]): void {
+  loadFromHistory(events: IEvent[]): void {
     events.forEach((event) => this.applyEvent(event));
   }
 
   get is_dead(): boolean {
-    return this.events.some((event) => event instanceof EnemyDiedEvent);
+    return this.events.some((event) => event instanceof EnemyDiedEvent) || this.health <= 0;
   }
 
   get initial_position(): IPosition {
@@ -41,7 +47,8 @@ export class Enemy {
   }
 
   get current_position(): IPosition {
-    const last_position = this.events[this.events.length - 1];
+    const movedEvents = this.events.filter((event) => event instanceof EnemyMovedEvent) as EnemyMovedEvent[];
+    const last_position = movedEvents[movedEvents.length - 1];
     
     return last_position ? last_position.position : this.initial_position;
   }

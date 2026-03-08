@@ -6,10 +6,10 @@ export type EnemyMovedEventType = "EnemyMoved";
 export class EnemyMovedEvent implements IEvent {
   type: EnemyMovedEventType = "EnemyMoved";
   position: IPosition;
-  enemy_uuid: string;
+  uuid: string;
 
-  constructor(position: IPosition, enemy_uuid: string) {
+  constructor(position: IPosition, uuid: string) {
     this.position = position;
-    this.enemy_uuid = enemy_uuid
+    this.uuid = uuid
   }
 }

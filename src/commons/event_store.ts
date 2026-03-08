@@ -14,6 +14,10 @@ export class EventStore {
     return this.events;
   }
 
+  static getByUuid(uuid: string): IEvent[] {
+    return this.events.filter(event => event.uuid === uuid);
+  }
+
   static getEventsByType(type: string): IEvent[] {
     return this.events.filter(event => event.type === type);
   }

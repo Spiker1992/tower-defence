@@ -7,6 +7,7 @@ import { Enemy } from '../models/enemy';
 import { EventStore } from '../../commons/event_store';
 import { EnemyReachedEndEvent } from '../events/enemy_reached_end_event';
 import { ENEMY_PATH } from '../../models/position';
+import { AddEnemyToTheMapCommand } from '../../game/commands/add_enemy_to_the_map_command';
 
 describe('MoveEnemyOnPathCommand', () => {
   beforeEach(() => {
@@ -16,7 +17,8 @@ describe('MoveEnemyOnPathCommand', () => {
 
   it('enemy should emit EnemyReachedEndEvent when path is complete', () => {
     const enemy = new Enemy();
-    moveEnemyOnPath(enemy);
+    AddEnemyToTheMapCommand(enemy.uuid, { health: 100 });
+    moveEnemyOnPath(enemy.uuid);
 
     const totalSteps = (ENEMY_PATH.length - 1) * 100 + 1;
     for (let i = 0; i < totalSteps; i++) {
@@ -28,7 +30,7 @@ describe('MoveEnemyOnPathCommand', () => {
     
     expect(allEvents.length).toBeGreaterThan(0);
     expect(reachedEndEvents.length).toBe(1);
-    expect((reachedEndEvents[0] as EnemyReachedEndEvent).enemy_uuid).toBe(enemy.uuid);
+    expect((reachedEndEvents[0] as EnemyReachedEndEvent).uuid).toBe(enemy.uuid);
   });
 
 });

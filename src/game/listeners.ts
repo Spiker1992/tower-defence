@@ -1,8 +1,7 @@
 import { moveEnemyOnPath } from "../enemy/commands/move_enemy_on_path_command"
 
 window.addEventListener("EnemyAddedToTheMap", (event: CustomEvent) => {
-    const enemy = event.detail.enemy
-
+    const enemy = event.detail.uuid;
     moveEnemyOnPath(enemy)
 })
 
