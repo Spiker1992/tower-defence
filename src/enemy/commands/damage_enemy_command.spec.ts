@@ -16,7 +16,7 @@ describe('DamageEnemyCommand', () => {
   beforeEach(() => {
     EventStore.clearHistory();
     enemy = new Enemy();
-    AddEnemyToTheMapCommand(enemy.uuid, { health: 100 });
+    AddEnemyToTheMapCommand(enemy.uuid, { health: 100, speed: 1 });
   });
 
   it('should damage a healthy enemy', () => {

@@ -9,6 +9,17 @@ jest.mock("../commons/event_store", () => ({
     },
 }));
 
+// Mock the AddEnemyToTheMapCommand to avoid dependency issues
+jest.mock("./commands/add_enemy_to_the_map_command", () => ({
+    AddEnemyToTheMapCommand: jest.fn(),
+}));
+
+// Mock the enemy presets
+jest.mock("../enemy/models/enemy_presets", () => ({
+    FastEnemy: {},
+    TankyEnemy: {},
+}));
+
 describe("debug_panel", () => {
     let debugPanelElement: HTMLElement;
 

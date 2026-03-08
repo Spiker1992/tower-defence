@@ -1,5 +1,9 @@
 import { EventStore } from "../commons/event_store";
+import { Enemy } from "../enemy/models/enemy";
 import { DamageEnemyCommand } from "../enemy/commands/damage_enemy_command";
+import { AddEnemyToTheMapCommand } from "./commands/add_enemy_to_the_map_command";
+import { FastEnemy, TankyEnemy } from "../enemy/models/enemy_presets";
+import { v4 as uuidv4 } from 'uuid';
 
 const REFRESH_INTERVAL_MS = 1000;
 const MAX_ENEMIES_DISPLAYED = 100;
@@ -60,6 +64,13 @@ export function truncateUuid(uuid: string): string {
     return uuid.substring(0, 8) + '...';
 }
 
+export function spawnEnemyDebug(type: 'fast' | 'tanky'): void {
+    const uuid = uuidv4();
+    const description = type === 'fast' ? FastEnemy : TankyEnemy;
+    AddEnemyToTheMapCommand(uuid, description);
+    renderDebugPanel();
+}
+
 export function damageEnemyDebug(enemyUuid: string): void {
     try {
         DamageEnemyCommand(enemyUuid, 10);
@@ -93,6 +104,10 @@ export function renderDebugPanel(): void {
 
     let html = '<h3>Event Store Debug</h3>';
     html += `<p>Total events: ${events.length} | Enemies: ${enemyGroups.length}</p>`;
+    html += `<div class="debug-controls">
+                <button onclick="window.spawnEnemyDebug('fast')">Spawn Fast</button>
+                <button onclick="window.spawnEnemyDebug('tanky')">Spawn Tanky</button>
+             </div>`;
 
     for (const enemy of enemyGroups) {
         const isExpanded = expandedEnemies.has(enemy.uuid);
@@ -131,12 +146,14 @@ declare global {
     interface Window {
         toggleEnemyDebug: (enemyUuid: string) => void;
         damageEnemyDebug: (enemyUuid: string) => void;
+        spawnEnemyDebug: (type: 'fast' | 'tanky') => void;
     }
 }
 
 export function initDebugPanel(): void {
     window.toggleEnemyDebug = toggleEnemy;
     window.damageEnemyDebug = damageEnemyDebug;
+    window.spawnEnemyDebug = spawnEnemyDebug;
     renderDebugPanel();
     setInterval(renderDebugPanel, REFRESH_INTERVAL_MS);
 }

@@ -17,7 +17,7 @@ describe('moveEnemyCommand', () => {
   beforeEach(() => {
     enemy = new Enemy();
     EventStore.clearHistory();
-    AddEnemyToTheMapCommand(enemy.uuid, { health: 100 })
+    AddEnemyToTheMapCommand(enemy.uuid, { health: 100, speed: 1 })
   });
 
 

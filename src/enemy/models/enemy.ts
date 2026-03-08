@@ -30,6 +30,7 @@ export class Enemy {
     this.events.push(event);
     if (event instanceof EnemyAddedToTheMapEvent) {
       this.health = event.description.health;
+      this.speed = event.description.speed;
     }
     if (event instanceof EnemyDamagedEvent) {
       this.health -= event.amount;
