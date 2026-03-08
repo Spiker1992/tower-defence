@@ -2,6 +2,8 @@ import { IPosition, ENEMY_PATH, GRID_SCALE } from '../../models/position';
 import { EventStore } from '../../commons/event_store';
 import { EnemyMovedEvent } from '../events/enemy_moved_event';
 import { EnemyDiedEvent } from '../events/enemy_died_event';
+import { EnemyDamagedEvent } from '../events/enemy_damaged_event';
+import { EnemyReachedEndEvent } from '../events/enemy_reached_end_event';
 import { EnemyAddedToTheMapEvent } from '../../game/events/enemy_added_to_the_map_event';
 import { v4 as uuidv4 } from 'uuid';
 import { IEvent } from '../../commons/events';
@@ -29,6 +31,9 @@ export class Enemy {
     if (event instanceof EnemyAddedToTheMapEvent) {
       this.health = event.description.health;
     }
+    if (event instanceof EnemyDamagedEvent) {
+      this.health -= event.amount;
+    }
   }
 
   loadFromHistory(events: IEvent[]): void {
@@ -37,6 +42,10 @@ export class Enemy {
 
   get is_dead(): boolean {
     return this.events.some((event) => event instanceof EnemyDiedEvent) || this.health <= 0;
+  }
+
+  get has_reached_end(): boolean {
+    return this.events.some((event) => event instanceof EnemyReachedEndEvent);
   }
 
   get initial_position(): IPosition {

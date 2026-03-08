@@ -1,4 +1,5 @@
 import { EventStore } from "../commons/event_store";
+import { DamageEnemyCommand } from "../enemy/commands/damage_enemy_command";
 
 const REFRESH_INTERVAL_MS = 1000;
 const MAX_ENEMIES_DISPLAYED = 100;
@@ -59,6 +60,16 @@ export function truncateUuid(uuid: string): string {
     return uuid.substring(0, 8) + '...';
 }
 
+export function damageEnemyDebug(enemyUuid: string): void {
+    try {
+        DamageEnemyCommand(enemyUuid, 10);
+        renderDebugPanel();
+    } catch (e) {
+        console.error(e);
+        alert(e instanceof Error ? e.message : 'Failed to damage enemy');
+    }
+}
+
 export function toggleEnemy(enemyUuid: string): void {
     if (expandedEnemies.has(enemyUuid)) {
         expandedEnemies.delete(enemyUuid);
@@ -92,6 +103,7 @@ export function renderDebugPanel(): void {
         html += `    <span class="debug-toggle">${isExpanded ? '[-]' : '[+]'}</span>`;
         html += `    <span class="debug-enemy-uuid">${truncateUuid(enemy.uuid)}</span>`;
         html += `    <span class="debug-event-count">(${enemy.events.length})</span>`;
+        html += `    <button onclick="window.damageEnemyDebug('${enemy.uuid}'); event.stopPropagation();">Damage</button>`;
         html += `  </div>`;
         html += `  <div class="debug-enemy-latest">`;
         html += `    Latest: ${getEventSummary(latestEvent)}`;
@@ -118,11 +130,13 @@ export function renderDebugPanel(): void {
 declare global {
     interface Window {
         toggleEnemyDebug: (enemyUuid: string) => void;
+        damageEnemyDebug: (enemyUuid: string) => void;
     }
 }
 
 export function initDebugPanel(): void {
     window.toggleEnemyDebug = toggleEnemy;
+    window.damageEnemyDebug = damageEnemyDebug;
     renderDebugPanel();
     setInterval(renderDebugPanel, REFRESH_INTERVAL_MS);
 }
