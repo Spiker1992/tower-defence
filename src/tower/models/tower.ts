@@ -1,6 +1,6 @@
-import { IPosition } from '../../models/position';
+import { IPosition, GRID_SCALE } from '../../models/position';
 import { IEvent } from '../../commons/events';
-import { TowerPlacedEvent, TowerUpgradedEvent } from '../events/tower_events';
+import { TowerPlacedEvent, TowerUpgradedEvent, TowerRemovedEvent } from '../events/tower_events';
 
 export class Tower {
   private events: IEvent[] = [];
@@ -10,6 +10,7 @@ export class Tower {
   public range: number = 0;
   public damage: number = 0;
   public cooldown: number = 0;
+  public is_removed: boolean = false;
 
   constructor(events: IEvent[] = [], uuid: string) {
     this.uuid = uuid;
@@ -31,6 +32,10 @@ export class Tower {
       this.damage += event.damageBonus;
       this.cooldown -= event.cooldownReduction;
     }
+
+    if (event instanceof TowerRemovedEvent) {
+      this.is_removed = true;
+    }
   }
 
   private loadFromHistory(events: IEvent[]): void {
@@ -38,9 +43,16 @@ export class Tower {
   }
 
   public is_in_range(targetPosition: IPosition): boolean {
-    // Manhattan distance implementation for simplicity
-    const distance = Math.abs(this.position.col - targetPosition.col) + 
-                     Math.abs(this.position.row - targetPosition.row);
-    return distance <= this.range;
+    const towerPixelPosition = {
+        col: this.position.col * GRID_SCALE,
+        row: this.position.row * GRID_SCALE
+    };
+    
+    // We assume range is in grid units for simplicity, so convert to pixel range
+    const rangeInPixels = this.range * GRID_SCALE;
+
+    const distance = Math.abs(towerPixelPosition.col - targetPosition.col) + 
+                     Math.abs(towerPixelPosition.row - targetPosition.row);
+    return distance <= rangeInPixels;
   }
 }
