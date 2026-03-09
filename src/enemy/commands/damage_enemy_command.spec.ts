@@ -9,6 +9,7 @@ import { AddEnemyToTheMapCommand } from '../../game/commands/add_enemy_to_the_ma
 import { EnemyDamagedEvent } from '../events/enemy_damaged_event';
 import { EnemyDiedEvent } from '../events/enemy_died_event';
 import { EnemyReachedEndEvent } from '../events/enemy_reached_end_event';
+import { ENEMY_PATH } from '../../models/position';
 
 describe('DamageEnemyCommand', () => {
   let enemy: Enemy;
@@ -16,7 +17,7 @@ describe('DamageEnemyCommand', () => {
   beforeEach(() => {
     EventStore.clearHistory();
     enemy = new Enemy();
-    AddEnemyToTheMapCommand(enemy.uuid, { health: 100, speed: 1 });
+    AddEnemyToTheMapCommand(enemy.uuid, { health: 100, speed: 1, path: ENEMY_PATH });
   });
 
   it('should damage a healthy enemy', () => {

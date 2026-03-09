@@ -1,4 +1,4 @@
-import { IPosition, ENEMY_PATH, GRID_SCALE } from '../../models/position';
+import { IPosition, GRID_SCALE } from '../../models/position';
 import { EventStore } from '../../commons/event_store';
 import { EnemyMovedEvent } from '../events/enemy_moved_event';
 import { EnemyDiedEvent } from '../events/enemy_died_event';
@@ -13,6 +13,7 @@ export class Enemy {
   speed: number;
   uuid: string;
   health: number = 0;
+  path: IPosition[] = [];
 
   constructor(events: IEvent[] = [], speed: number = 1, uuid: string = uuidv4()) {
     this.events = [];
@@ -31,6 +32,7 @@ export class Enemy {
     if (event instanceof EnemyAddedToTheMapEvent) {
       this.health = event.description.health;
       this.speed = event.description.speed;
+      this.path = event.description.path;
     }
     if (event instanceof EnemyDamagedEvent) {
       this.health -= event.amount;
@@ -51,8 +53,8 @@ export class Enemy {
 
   get initial_position(): IPosition {
     return {
-      col: ENEMY_PATH[0].col * GRID_SCALE,
-      row: ENEMY_PATH[0].row * GRID_SCALE,
+      col: this.path[0].col * GRID_SCALE,
+      row: this.path[0].row * GRID_SCALE,
     };
   }
 
@@ -67,10 +69,10 @@ export class Enemy {
     const path_index = Math.floor(this.events.length / 100)
     const new_index = path_index + 1
 
-    if (new_index >= ENEMY_PATH.length) {
+    if (new_index >= this.path.length) {
       return undefined;
     }
 
-    return ENEMY_PATH[new_index];
+    return this.path[new_index];
   }
 }

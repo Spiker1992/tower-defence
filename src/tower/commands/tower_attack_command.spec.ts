@@ -8,6 +8,7 @@ import { TowerPlacedEvent, TowerAttackedEvent, TowerRemovedEvent } from '../even
 import { EnemyAddedToTheMapEvent } from '../../game/events/enemy_added_to_the_map_event';
 import { EnemyDamagedEvent } from '../../enemy/events/enemy_damaged_event';
 import { v4 as uuidv4 } from 'uuid';
+import { ENEMY_PATH } from '../../models/position';
 
 describe('TowerAttackCommand', () => {
     beforeEach(() => {
@@ -31,7 +32,7 @@ describe('TowerAttackCommand', () => {
         
         // Increased range from 5 to 500 to cover (100,0)
         Towers.save(new TowerPlacedEvent(towerUuid, { col: 0, row: 0 }, 500, 10, 1000));
-        Enemies.save(new EnemyAddedToTheMapEvent(enemyUuid, { health: 10, speed: 1 }));
+        Enemies.save(new EnemyAddedToTheMapEvent(enemyUuid, { health: 10, speed: 1, path: ENEMY_PATH }));
 
         expect(() => {
             TowerAttackCommand(towerUuid, enemyUuid);
@@ -47,7 +48,7 @@ describe('TowerAttackCommand', () => {
         
         // Increased range from 5 to 500 to cover (100,0)
         Towers.save(new TowerPlacedEvent(towerUuid, { col: 0, row: 0 }, 500, 10, 1000)); // 1s cooldown
-        Enemies.save(new EnemyAddedToTheMapEvent(enemyUuid, { health: 10, speed: 1 }));
+        Enemies.save(new EnemyAddedToTheMapEvent(enemyUuid, { health: 10, speed: 1, path: ENEMY_PATH }));
 
         // First attack
         TowerAttackCommand(towerUuid, enemyUuid);
@@ -64,7 +65,7 @@ describe('TowerAttackCommand', () => {
         
         Towers.save(new TowerPlacedEvent(towerUuid, { col: 0, row: 0 }, 5, 10, 1000));
         Towers.save(new TowerRemovedEvent(towerUuid, towerUuid, 'sold'));
-        Enemies.save(new EnemyAddedToTheMapEvent(enemyUuid, { health: 10, speed: 1 }));
+        Enemies.save(new EnemyAddedToTheMapEvent(enemyUuid, { health: 10, speed: 1, path: ENEMY_PATH }));
         
         expect(() => {
             TowerAttackCommand(towerUuid, enemyUuid);
@@ -79,7 +80,7 @@ describe('TowerAttackCommand', () => {
         Towers.save(new TowerPlacedEvent(towerUuid, { col: 0, row: 0 }, 0, 10, 1000));
         
         // Enemy at path index 0 is (1,0) grid -> (100,0) px
-        Enemies.save(new EnemyAddedToTheMapEvent(enemyUuid, { health: 10, speed: 1 }));
+        Enemies.save(new EnemyAddedToTheMapEvent(enemyUuid, { health: 10, speed: 1, path: ENEMY_PATH }));
         
         expect(() => {
             TowerAttackCommand(towerUuid, enemyUuid);

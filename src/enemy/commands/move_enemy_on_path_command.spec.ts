@@ -17,7 +17,7 @@ describe('MoveEnemyOnPathCommand', () => {
 
   it('enemy should emit EnemyReachedEndEvent when path is complete', () => {
     const enemy = new Enemy();
-    AddEnemyToTheMapCommand(enemy.uuid, { health: 100, speed: 1 });
+    AddEnemyToTheMapCommand(enemy.uuid, { health: 100, speed: 1, path: ENEMY_PATH });
     moveEnemyOnPath(enemy.uuid);
 
     const totalSteps = (ENEMY_PATH.length - 1) * 100 + 1;
