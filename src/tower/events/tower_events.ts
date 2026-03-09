@@ -21,3 +21,22 @@ export class TowerUpgradedEvent implements IEvent {
     public cooldownReduction: number
   ) {}
 }
+
+export class TowerAttackedEvent implements IEvent {
+  type: string = "TowerAttacked";
+  constructor(
+    public uuid: string,
+    public towerUuid: string,
+    public enemyUuid: string,
+    public timestamp: number
+  ) {}
+}
+
+export class TowerRemovedEvent implements IEvent {
+  type: string = "TowerRemoved";
+  constructor(
+    public uuid: string,
+    public towerUuid: string,
+    public reason: string
+  ) {}
+}
