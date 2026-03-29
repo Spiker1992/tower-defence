@@ -34,17 +34,17 @@ describe('moveEnemyCommand', () => {
     const enemyEvents = EventStore.getByUuid(enemy.uuid);
     expect(enemyEvents.length).toBe(2);
     expect((enemyEvents[1] as EnemyMovedEvent).position).toEqual({
-      col: 101,
-      row: 0
+      col: 0,
+      row: 50
     });
   });
 
 
   it('make a move', () => {
-    EventStore.save(new EnemyMovedEvent(
+    enemy.persist(new EnemyMovedEvent(
       {
-        col: 101,
-        row: 0
+        col: 0,
+        row: 50
       },
       enemy.uuid
     ));
@@ -54,24 +54,25 @@ describe('moveEnemyCommand', () => {
     const enemyEvents = EventStore.getByUuid(enemy.uuid);
     expect(enemyEvents.length).toBe(3);
     expect((enemyEvents[2] as EnemyMovedEvent).position).toEqual({
-      col: 102,
-      row: 0
+      col: 1,
+      row: 50
     });
   });
 
   it('makes a move towards next path position', () => {
-    EventStore.save(new EnemyMovedEvent({col: 100, row: 0}, enemy.uuid));
+    enemy.persist(new EnemyMovedEvent({col: 1, row: 50}, enemy.uuid));
+    enemy.persist(new EnemyMovedEvent({col: 2, row: 50}, enemy.uuid));
 
     moveEnemyCommand(enemy.uuid);
     const enemyEvents = EventStore.getByUuid(enemy.uuid);
-    expect((enemyEvents[2] as EnemyMovedEvent).position).toEqual({
-      col: 101,
-      row: 0
+    expect((enemyEvents[3] as EnemyMovedEvent).position).toEqual({
+      col: 2,
+      row: 50
     });
   })
 
   it('should emit EnemyReachedEndEvent when path is complete', () => {
-    const totalSteps = (ENEMY_PATH.length - 1) * 100;
+    const totalSteps = ENEMY_PATH.length + 1;
     
     for (let i = 0; i < totalSteps; i++) {
       try {

@@ -51,7 +51,14 @@ export class Enemy {
     return this.events.some((event) => event instanceof EnemyReachedEndEvent);
   }
 
+  get isPixelPath(): boolean {
+    return this.path.some(pos => pos.col >= GRID_SCALE || pos.row >= GRID_SCALE);
+  }
+
   get initial_position(): IPosition {
+    if (this.isPixelPath) {
+      return this.path[0];
+    }
     return {
       col: this.path[0].col * GRID_SCALE,
       row: this.path[0].row * GRID_SCALE,
@@ -66,8 +73,18 @@ export class Enemy {
   }
 
   get next_path(): IPosition | undefined {
-    const path_index = Math.floor(this.events.length / 100)
-    const new_index = path_index + 1
+    const movedEvents = this.events.filter((event) => event instanceof EnemyMovedEvent) as EnemyMovedEvent[];
+
+    if (this.isPixelPath) {
+      const new_index = movedEvents.length;
+      if (new_index >= this.path.length) {
+        return undefined;
+      }
+      return this.path[new_index];
+    }
+
+    const path_index = Math.floor(this.events.length / 100);
+    const new_index = path_index + 1;
 
     if (new_index >= this.path.length) {
       return undefined;

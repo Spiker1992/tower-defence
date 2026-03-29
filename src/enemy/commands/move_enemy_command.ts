@@ -29,6 +29,10 @@ function nextPosition(enemy: Enemy): IPosition {
   const nextPath = enemy.next_path;
   const currentPos = enemy.current_position;
 
+  if (enemy.isPixelPath) {
+    return nextPath!;
+  }
+
   const colDiff = (nextPath!.col * GRID_SCALE) - currentPos.col;
   const rowDiff = (nextPath!.row * GRID_SCALE) - currentPos.row;
 

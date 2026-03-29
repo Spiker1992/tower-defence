@@ -1,5 +1,10 @@
 body {
-  margin: 0
+  margin: 0;
+  overflow: hidden;
+}
+
+#game-canvas {
+  display: block;
 }
 
 #gameTable {
@@ -158,7 +163,7 @@ td {
   top: 0;
   right: 0;
   width: 280px;
-  height: 100vh;
+  max-height: 100vh;
   background: #1e1e1e;
   color: #d4d4d4;
   overflow-y: auto;

@@ -1,4 +1,4 @@
-import { IPosition, ENEMY_PATH, MAP_WIDTH, MAP_HEIGHT } from '../../models/position';
+import { IPosition, ENEMY_PATH_GRID, MAP_WIDTH, MAP_HEIGHT } from '../../models/position';
 import { Towers } from '../../game/event_store';
 import { TowerPlacedEvent } from '../events/tower_events';
 
@@ -7,7 +7,7 @@ export function PlaceTowerCommand(uuid: string, position: IPosition) {
         throw new Error('Cannot place tower outside of map boundaries');
     }
 
-    const isPath = ENEMY_PATH.some(p => p.col === position.col && p.row === position.row);
+    const isPath = ENEMY_PATH_GRID.some(p => p.col === position.col && p.row === position.row);
     if (isPath) {
         throw new Error('Cannot place tower on the enemy path');
     }
