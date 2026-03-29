@@ -2,6 +2,8 @@ import { MAP_WIDTH, MAP_HEIGHT, ENEMY_PATH, GRID_SCALE, IPosition, ENEMY_PATH_GR
 import { EnemyAddedToTheMapEvent } from "./events/enemy_added_to_the_map_event";
 import { EnemyMovedEvent } from "../enemy/events/enemy_moved_event";
 import { EnemyDiedEvent } from "../enemy/events/enemy_died_event";
+import { EventStore } from "../commons/event_store";
+import { Enemy } from "../enemy/models/enemy";
 
 const canvas = document.getElementById('game-canvas') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d')!;
@@ -72,7 +74,9 @@ function drawEnemy(uuid: string): void {
     const pos = enemyPositions.get(uuid);
     if (!pos) return;
     
-    const health = enemyHealths.get(uuid) ?? 0;
+    const enemyEvents = EventStore.getByUuid(uuid);
+    const enemy = new Enemy(enemyEvents, 1, uuid);
+    const health = enemy.health;
     const speed = enemySpeeds.get(uuid) ?? 1;
     
     const x = (pos.col / GRID_SCALE) * cellSize;

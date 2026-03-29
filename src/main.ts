@@ -7,5 +7,3 @@ import { v4 as uuidv4 } from 'uuid';
 
 initRenderer();
 initDebugPanel();
-
-AddEnemyToTheMapCommand(uuidv4(), { health: 100, speed: 1, path: ENEMY_PATH });

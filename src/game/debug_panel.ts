@@ -2,6 +2,7 @@ import { EventStore } from "../commons/event_store";
 import { Enemy } from "../enemy/models/enemy";
 import { DamageEnemyCommand } from "../enemy/commands/damage_enemy_command";
 import { AddEnemyToTheMapCommand } from "./commands/add_enemy_to_the_map_command";
+import { SpawnEnemiesCommand } from "./commands/spawn_enemies_command";
 import { FastEnemy, TankyEnemy } from "../enemy/models/enemy_presets";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -71,6 +72,11 @@ export function spawnEnemyDebug(type: 'fast' | 'tanky'): void {
     renderDebugPanel();
 }
 
+export function spawnEnemiesDebug(type: 'fast' | 'tanky' = 'fast'): void {
+    SpawnEnemiesCommand(10, type);
+    renderDebugPanel();
+}
+
 export function damageEnemyDebug(enemyUuid: string): void {
     try {
         DamageEnemyCommand(enemyUuid, 10);
@@ -98,7 +104,14 @@ export function renderDebugPanel(): void {
     const enemyGroups = groupEventsByEnemy(events);
 
     if (enemyGroups.length === 0) {
-        panel.innerHTML = '<h3>Event Store Debug</h3><p>No events yet</p>';
+        panel.innerHTML = '<h3>Event Store Debug</h3>';
+        panel.innerHTML += `<div class="debug-controls">
+                <button onclick="window.spawnEnemyDebug('fast')">Spawn Fast</button>
+                <button onclick="window.spawnEnemyDebug('tanky')">Spawn Tanky</button>
+                <button onclick="window.spawnEnemiesDebug('fast')">Spawn 10 Fast</button>
+                <button onclick="window.spawnEnemiesDebug('tanky')">Spawn 10 Tanky</button>
+             </div>`;
+        panel.innerHTML += '<p>No events yet</p>';
         return;
     }
 
@@ -107,6 +120,8 @@ export function renderDebugPanel(): void {
     html += `<div class="debug-controls">
                 <button onclick="window.spawnEnemyDebug('fast')">Spawn Fast</button>
                 <button onclick="window.spawnEnemyDebug('tanky')">Spawn Tanky</button>
+                <button onclick="window.spawnEnemiesDebug('fast')">Spawn 10 Fast</button>
+                <button onclick="window.spawnEnemiesDebug('tanky')">Spawn 10 Tanky</button>
              </div>`;
 
     for (const enemy of enemyGroups) {
@@ -149,6 +164,7 @@ declare global {
         toggleEnemyDebug: (enemyUuid: string) => void;
         damageEnemyDebug: (enemyUuid: string) => void;
         spawnEnemyDebug: (type: 'fast' | 'tanky') => void;
+        spawnEnemiesDebug: (type?: 'fast' | 'tanky') => void;
     }
 }
 
@@ -156,6 +172,7 @@ export function initDebugPanel(): void {
     window.toggleEnemyDebug = toggleEnemy;
     window.damageEnemyDebug = damageEnemyDebug;
     window.spawnEnemyDebug = spawnEnemyDebug;
+    window.spawnEnemiesDebug = spawnEnemiesDebug;
     renderDebugPanel();
     setInterval(renderDebugPanel, REFRESH_INTERVAL_MS);
 }
